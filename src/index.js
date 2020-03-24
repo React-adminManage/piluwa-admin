@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+// import 'antd/dist/antd.css'  //引入antd的所有样式文件
+import './common.css'  //清除默认样式
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
