@@ -11,6 +11,10 @@ class Order{
         let url =`${HOST}/order/find`
         return axios.get(url,{params:payload})
     }
+    findById(payload){
+        let url =`${HOST}/order/SearchByoId`
+        return axios.get(url,{params:payload})
+    }
 }
 
 export default new Order()

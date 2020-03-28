@@ -3,6 +3,7 @@ import React,{Component} from 'react'
 import { Card,Button,Input,Tabs,Tag,Table} from 'antd';
 import order from '../../../api/orderAPI'
 import Style from './index.module.less'
+import OrderDetail from '../orderDetail/index'
 const { TabPane } = Tabs;
 
 
@@ -19,6 +20,8 @@ const { TabPane } = Tabs;
 
 class orderList extends Component {
     state = {
+        showData:{},
+        show:false,
         data: [],
         pagination: {defaultPageSize:5},
         loading: false,
@@ -28,16 +31,15 @@ class orderList extends Component {
             {title: '订单号',dataIndex: 'oId',key:'oId'},
             {title: '用户',dataIndex: 'oUser',key:'oUser'},
             {title: '订单状态',dataIndex: 'oStatus',key:'oStatus',render(oStatus){
-         
               return(    
                 <Tag color={statusobj[oStatus].color}>{statusobj[oStatus].txt}</Tag>
               )
             }},
             {title: '创建时间',dataIndex: 'createTime',key:'createTime'},
             {title: '更新时间',dataIndex: 'updateTime',key:'updateTime'},
-            {title: '操作',key: 'action',render:(recode)=>{
+            {title: '操作',key: 'action',render:(record)=>{
                 return(    
-                   <Button size='small' type="primary" onClick={this.jumpDetail.bind(this,recode.oId)}>详情</Button>
+                   <Button size='small' type="primary" onClick={this.jumpDetail.bind(this,record)}>详情</Button>
                 )
               }},
         ]
@@ -46,10 +48,11 @@ class orderList extends Component {
         console.log(this)
         this.fetch();
     }
-    jumpDetail=(oId)=>{
-        this.props.history.push(`/admin/order/${oId}`)    
+    jumpDetail=  async (record)=>{
+       await this.setState({showData:record})
+       await this.setState({show:true}) //显示详情页
     }
-    handleTableChange = (pagination, filters, sorter) => {
+    handleTableChange = (pagination) => {
       console.log(pagination,'1')
       const pager = { ...this.state.pagination };
       console.log(pager)
@@ -94,6 +97,9 @@ class orderList extends Component {
             oStatus:key
           });
     }
+    close=()=>{
+      this.setState({show:false})
+    }
     render() { 
         return ( 
             <div className={Style.box}>
@@ -130,7 +136,8 @@ class orderList extends Component {
                         onChange={this.handleTableChange}  //分页、排序、筛选变化时触发
                     />
                 </Card>
-          </div>
+                 {this.state.show?<OrderDetail close={this.close} orderMsg={this.state.showData}></OrderDetail>:''}
+             </div>
          );
     }
 }

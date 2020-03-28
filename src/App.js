@@ -50,9 +50,9 @@ class App extends Component {
 
 
                 {/* 订单管理的路由 */}
-                 <Route path='/admin/order/List' component={orderList}></Route>
-                 <Route path='/admin/order/Audit' component={orderAudit}></Route>
-                 <Route path='/admin/order/:oId' component={orderDetail}></Route>    
+                 <Route exact path='/admin/order/List'   component={orderList}></Route>
+                 <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>
+                 <Route exact path='/admin/order/Detail/:oId'  component={orderDetail}></Route>    
               </Admin>
             )
           }}></Route>
