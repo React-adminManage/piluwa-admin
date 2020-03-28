@@ -1,5 +1,11 @@
 export default[
   {
+    key:'0',
+    title:"主页面",
+    icon:'home',
+    path:'/home'
+  },
+  {
     key:'1',
     title:"类别管理",
     icon:'home',
@@ -60,7 +66,7 @@ export default[
       {
         key:'5-2',
         title:'订单审核',
-        path:'/admin/order/audit'
+        path:'/admin/order/Audit'
       },
     ]
   },
