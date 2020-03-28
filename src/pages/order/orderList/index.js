@@ -47,9 +47,9 @@ class orderList extends Component {
         this.fetch();
     }
     jumpDetail=(oId)=>{
-        this.props.history.push(`/admin/order/${oId}`)    
+        this.props.history.push(`/admin/order/Detail/${oId}`)    
     }
-    handleTableChange = (pagination, filters, sorter) => {
+    handleTableChange = (pagination) => {
       console.log(pagination,'1')
       const pager = { ...this.state.pagination };
       console.log(pager)
