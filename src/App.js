@@ -9,6 +9,11 @@ import Admin from './pages/Admin'  //引入管理组件
 import ShopList from './pages/Shop/ShopList'
 import ShopAdd from './pages/Shop/ShopAdd'
 
+// 订单管理相关组件
+import orderList from './pages/order/orderList'
+import orderAudit from './pages/order/orderAudit'
+import orderDetail from './pages/order/orderDetail'
+
 class App extends Component {
   state = {  }
   render() { 
@@ -21,7 +26,13 @@ class App extends Component {
           <Route path='/admin' render={()=>{  
             return(  
               <Admin>
-                 <Route path='/admin/shop/shopList' component={ShopList}></Route>
+                 <Route path='/admin/shop/shopList' component={ShopList}></Route> 
+
+
+                {/* 订单管理的路由 */}
+                 <Route path='/admin/order/List' component={orderList}></Route>
+                 <Route path='/admin/order/Audit' component={orderAudit}></Route>
+                 <Route path='/admin/order/:oId' component={orderDetail}></Route>    
               </Admin>
             )
           }}></Route>
