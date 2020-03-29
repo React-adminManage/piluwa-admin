@@ -7,7 +7,7 @@ import OrderDetail from '../orderDetail/index'
 const { TabPane } = Tabs;
 
 
-
+// 有个页面切换页数的bug  日后修复
   const statusobj={
     '0':{txt:'未付款',color:'volcano'},
     '1':{txt:'已付款',color:'purple'},
@@ -36,10 +36,15 @@ class orderList extends Component {
               )
             }},
             {title: '创建时间',dataIndex: 'createTime',key:'createTime'},
-            {title: '更新时间',dataIndex: 'updateTime',key:'updateTime'},
+            // {title: '更新时间',dataIndex: 'updateTime',key:'updateTime'},
+            {title: '更新时间',key:'updateTime',render:(record)=>{
+              return(    
+              <span>{record.updateTime?record.updateTime:record.createTime}</span>
+              )
+            }},
             {title: '操作',key: 'action',render:(record)=>{
                 return(    
-                   <Button size='small' type="primary" onClick={this.jumpDetail.bind(this,record)}>详情</Button>
+                   <Button size='small' type="primary" onClick={this.jumpDetail.bind(this,record)}>查看</Button>
                 )
               }},
         ]
@@ -93,7 +98,7 @@ class orderList extends Component {
         this.setState({oStatus:key})
         this.fetch({
             results: 5,
-            page: this.state.pagination.current,
+            page: 1,
             oStatus:key
           });
     }
@@ -122,10 +127,19 @@ class orderList extends Component {
                     </Tabs>
                     {/* 搜索 */}
                     <div className={Style.search}>
-                        <Input className={Style.inp} placeholder="订单号" />
-                        <Input className={Style.inp} placeholder="用户" />
-                        <Button>搜索</Button>
+                      <div className={Style.lab}>
+                        <label>订单号: </label><Input className={Style.inp} placeholder="请输入" />
+                        <label>用户: </label><Input className={Style.inp} placeholder="请输入" />
+                      </div>
+                      <div className={Style.btn}>
+                        <Button type="primary" className={Style.bt}>查询</Button>
+                        <Button className={Style.bt}>重置</Button>
+                      </div>
+                       
+  
+                        
                     </div>
+                  
                     {/* 表格 */}
                     <Table
                         columns={this.state.columns} 

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import CustomNav from '../../components/CustomNav'
+import HeaderNav from '../../components/HeaderNav'
 import { Layout } from 'antd';
-import style from './index.module.less'
+import Style from './index.module.less'
 const { Header, Content, Footer, Sider } = Layout;
 class Admin extends Component {
   state = {  }
   render() { 
     return ( 
-      <Layout className={style.wrapper}>
+      <Layout className={Style.wrapper}>
         {/* 侧边栏 */}
       <Sider>
         <div style={{background:'#fff',textAlign: 'center'}}>
@@ -17,10 +18,10 @@ class Admin extends Component {
       </Sider>
      
       <Layout >
-        <Header style={ {background:'#fff'} }>
-            <div>这里是head</div>
+        <Header className={Style.header}>
+            <HeaderNav></HeaderNav>
         </Header>
-        <Content > 
+        <Content className={Style.content}> 
           {this.props.children}
         </Content>
         {/* <Footer style={ {height:'10%'} }>Ant Design ©2018 Created by Ant UED</Footer> */}

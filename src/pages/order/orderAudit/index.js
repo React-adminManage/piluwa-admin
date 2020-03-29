@@ -1,9 +1,26 @@
 import React,{Component} from 'react'
+
+import { Card,Button,Input,Tabs,Tag,Table} from 'antd';
+
+import Style from './index.module.less'
+
+
+
+
 class orderAudit extends Component {
-    state = {  }
+    state = {
+       
+      };
+    componentDidMount() {
+      
+    }
     render() { 
         return ( 
-            <div>这里是订单审核页面</div>
+            <div className={Style.box}>
+                <Card className={Style.card} title="审核订单" bordered={false} >
+                  
+                </Card>
+             </div>
          );
     }
 }

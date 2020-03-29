@@ -47,7 +47,7 @@ class CustomNav extends React.Component {
   }
   render(){
     return(
-    <Menu onClick={handleClick.bind(this)} style={{ width: 200 }} mode="vertical" theme='dark' >
+    <Menu onClick={handleClick.bind(this)} style={{ width: 200 }} mode="inline" theme='dark' >
       {this.renderItem(menuList)}
     </Menu>
     )
