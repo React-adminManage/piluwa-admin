@@ -50,15 +50,13 @@ class orderList extends Component {
         ]
       };
     componentDidMount() {
-        console.log(this)
-        this.fetch();
+        this.fetch();  //挂载数据请求进行渲染
     }
     jumpDetail=  async (record)=>{
        await this.setState({showData:record})
        await this.setState({show:true}) //显示详情页
     }
-    handleTableChange = (pagination) => {
-      console.log(pagination,'1')
+    handleTableChange = (pagination) => {  //页数切换时触发
       const pager = { ...this.state.pagination };
       console.log(pager)
       pager.current = pagination.current;
@@ -73,38 +71,59 @@ class orderList extends Component {
     };
   
     fetch = (params = {}) => {  //网络请求订单列表
-      let {results=5,page=1,oStatus} = params;
+      let {results=5,page=1,oStatus} = params;   //页面大小，页面，订单状态
       this.setState({ loading: true });
       let request = ''
       console.log(oStatus)
-      if(oStatus ==='all'||!oStatus){
-        request= order.find({pageSize:results,page})
-      }else{
-        request= order.findStatus({pageSize:results,page,oStatus:Number(oStatus)})
+      if(oStatus ==='all'||!oStatus){  //初次加载或者选择全部
+        request= order.find(
+          {
+            pageSize:results,
+            page, 
+            oId:this.refs.oId.state.value,
+            oUser:this.refs.oUser.state.value,
+          })
+      }else{  //指定订单类型
+        request= order.findStatus({
+          pageSize:results,page,
+          oStatus:Number(oStatus),
+          oId:this.refs.oId.state.value,
+          oUser:this.refs.oUser.state.value,
+        })
       }
-      request
-      .then(data => {
+      request.then(data => {
         const pagination = { ...this.state.pagination };
-        console.log(data)
-        pagination.total = data.allcount;
+        pagination.total = data.allcount; //总记录数 
         this.setState({
-          loading: false,
-          data: data.orderList,
+          loading: false,  //关闭loading
+          data: data.orderList,  //更新表格数据
           pagination,
+          oStatus:oStatus
         });
       });
     }
     callback=(key)=> { //tab切换触发axios请求
-        this.setState({oStatus:key})
+        const pager = { ...this.state.pagination };
+        pager.current = 1;
+        console.log(key)
+        this.setState({
+          oStatus:key,
+          pagination: pager
+        })
+        this.refs.oId.state.value='';
+        this.refs.oUser.state.value='';
         this.fetch({
             results: 5,
             page: 1,
             oStatus:key
           });
     }
-    close=()=>{
+    close=()=>{  //详情页的关闭
       this.setState({show:false})
     }
+
+
+
     render() { 
         return ( 
             <div className={Style.box}>
@@ -128,12 +147,35 @@ class orderList extends Component {
                     {/* 搜索 */}
                     <div className={Style.search}>
                       <div className={Style.lab}>
-                        <label>订单号: </label><Input className={Style.inp} placeholder="请输入" />
-                        <label>用户: </label><Input className={Style.inp} placeholder="请输入" />
+                        <label>订单号: </label><Input className={Style.inp} placeholder="请输入" ref='oId' />
+                        <label>用户: </label><Input className={Style.inp} placeholder="请输入"  ref='oUser'/>
                       </div>
                       <div className={Style.btn}>
-                        <Button type="primary" className={Style.bt}>查询</Button>
-                        <Button className={Style.bt}>重置</Button>
+                        <Button type="primary" className={Style.bt} onClick={()=>{ //点击进行多条件模糊查询
+                          // this.setState({ loading: true }); //显示加载条
+                          // order.mutilquery({  //数据请求
+                          //   oId:this.refs.oId.state.value,
+                          //   oUser:this.refs.oUser.state.value,
+                          //   oStatus:this.state.oStatus
+                          // }).then((res)=>{
+                          //   const pagination = { ...this.state.pagination };
+                          //   pagination.total = res.allcount;
+                          //   this.setState({
+                          //     loading: false,
+                          //     data: res.orderList,
+                          //     pagination,
+                          //   });
+                          // })
+                          this.fetch({
+                            results:5,
+                            page: 1,
+                            oStatus:this.state.oStatus,
+                          })
+                        }}>查询</Button>
+                        <Button className={Style.bt} onClick={()=>{
+                            this.refs.oId.state.value='';
+                            this.refs.oUser.state.value='';
+                        }}>重置</Button>
                       </div>
                        
   
