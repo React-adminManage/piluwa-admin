@@ -22,7 +22,19 @@ class App extends Component {
     return (
       // 设置路由 
       <HashRouter>
+        {/* 一级路由模板   路径对应组件 */}
+        <Route path='/login' component={Login}></Route>
+        {/* 嵌套路由模板 */}
+        <Route path='/admin' render={() => {
+          return (
+            <Admin>
+              <Route path='/admin/shop/shopList' component={ShopList}></Route>
 
+              {/* 管理管理路由 */}
+              <Route path='/admin/administrator' component={admins}></Route>
+            </Admin>
+          )
+        }}></Route>
           {/* 一级路由模板   路径对应组件 */}
           <Route path='/login' component={Login}></Route>
           {/* 嵌套路由模板 */}
@@ -31,13 +43,11 @@ class App extends Component {
               <Admin>
                  <Route path='/admin/shop/shopList' component={ShopList}></Route> 
 
-                {/* 管理管理路由 */}
-                <Route path='/admin/administrator' component={admins}></Route>
 
                 {/* 订单管理的路由 */}
-                 <Route exact path='/admin/order/List'   component={orderList}></Route>
-                 <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>
-                 <Route exact path='/admin/order/Detail/:oId'  component={orderDetail}></Route>    
+                 <Route path='/admin/order/List' component={orderList}></Route>
+                 <Route path='/admin/order/Audit' component={orderAudit}></Route>
+                 <Route path='/admin/order/:oId' component={orderDetail}></Route>    
               </Admin>
             )
           }}></Route>

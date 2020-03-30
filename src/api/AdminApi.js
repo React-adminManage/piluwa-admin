@@ -1,0 +1,20 @@
+import Axios from '../utils/axios'
+class Admin {
+    list() {
+        let url = 'http://47.97.244.129:3002/admin'
+        return Axios.get(url)
+    }
+    add(userName,passWord){
+        let url='http://47.97.244.129:3002/admin/add'
+        return Axios.post(url,{userName,passWord})
+    }
+    del(_id){
+        let url='http://47.97.244.129:3002/admin/del'
+        // 模板字符串写法
+        // return Axios.delete(`${url}/${_id}`)
+        // 拼接法
+        return Axios.delete(url+'/'+_id)
+
+    }
+}
+export default new Admin()
