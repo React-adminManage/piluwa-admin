@@ -22,7 +22,6 @@ class App extends Component {
     return (
       // 设置路由 
       <HashRouter>
-
           {/* 一级路由模板   路径对应组件 */}
           <Route path='/login' component={Login}></Route>
           {/* 嵌套路由模板 */}

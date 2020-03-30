@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 
 import { Card,Button,Input,Tabs,Tag,Table} from 'antd';
-import order from '../../../api/orderAPI'
+import order from '@api/orderAPI'
 import Style from './index.module.less'
 import OrderDetail from '../orderDetail/index'
 const { TabPane } = Tabs;
