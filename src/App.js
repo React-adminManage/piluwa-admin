@@ -16,6 +16,10 @@ import orderList from './pages/order/orderList'
 import orderAudit from './pages/order/orderAudit'
 import orderDetail from './pages/order/orderDetail'
 
+// 商品分类相关组件
+import ClassifyList from './pages/Classify/ClassifyList'
+import ClassifyAdd from './pages/Classify/ClassifyAdd'
+
 class App extends Component {
   state = {}
   render() {
@@ -36,7 +40,12 @@ class App extends Component {
                 {/* 订单管理的路由 */}
                  <Route exact path='/admin/order/List'   component={orderList}></Route>
                  <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>
-                 <Route exact path='/admin/order/Detail/:oId'  component={orderDetail}></Route>    
+                 <Route exact path='/admin/order/Detail/:oId'  component={orderDetail}></Route>
+
+                {/* 商品分类管理的路由 */}
+                <Route path='/admin/type/find' component={ClassifyList}></Route> 
+                <Route path='/admin/type/add' component={ClassifyAdd}></Route> 
+                
               </Admin>
             )
           }}></Route>
