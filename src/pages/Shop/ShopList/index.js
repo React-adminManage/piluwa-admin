@@ -1,9 +1,15 @@
 import React,{Component} from 'react'
+import style from './index.module.less'
+import {Card} from 'antd'
 class ShopList extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>这里显示商品列表</div>
+            <div className={style.box}>    
+            <Card title='商品列表' className={style.Card}>
+
+            </Card>
+            </div>
          );
     }
 }
