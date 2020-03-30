@@ -39,7 +39,7 @@ class ShopList extends Component {
                 <Tag color={obj[putaway].color}>{obj[putaway].msg}</Tag>
                 )
             }}, 
-            {title: '操作' ,key: 'action',width:120,render(recode){
+            {title: '操作' ,fixed:'right',key: 'action',width:120,render(recode){
                 return(
                     <div>
                         <Button type='danger' size='small'>删除</Button>
