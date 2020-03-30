@@ -16,14 +16,11 @@ class Order{
         let url =`${HOST}/order/audioFind`
         return axios.get(url)
     }
-    // findById(payload){
-    //     let url =`${HOST}/order/SearchByoId`
-    //     return axios.get(url,{params:payload})
-    // }
-    // mutilquery(payload){
-    //     let url =`${HOST}/order/mutilquery`
-    //     return axios.post(url,payload)
-    // }
+    
+    audioOrder(payload){  //审核订单
+        let url =`${HOST}/order/audioOrder`
+        return axios.post(url,payload)
+    }
 }
 
 export default new Order()

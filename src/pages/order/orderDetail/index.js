@@ -88,7 +88,7 @@ class orderDetail extends Component {
                 </Descriptions>
                 <div className={Style.Msg}>
                     <span className={Style.title}>商品信息</span>
-                    <Table  columns={columns} dataSource={oShopMsg} pagination={false} footer={() => ''} />
+                    <Table rowKey={(record)=>{return record.productId}} columns={columns} dataSource={oShopMsg} pagination={false} footer={() => ''} />
                 </div>
                 </Card>
             </div>
