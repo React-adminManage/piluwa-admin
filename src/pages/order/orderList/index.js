@@ -14,10 +14,7 @@ const { TabPane } = Tabs;
     '2':{txt:'已完成',color:'cyan'},
     '3':{txt:'已取消',color:'red'},
     '4':{txt:'审核中',color:'blue'},
-}
-
-
-
+  }
 class orderList extends Component {
     state = {
         showData:{},
