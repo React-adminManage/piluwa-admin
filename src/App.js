@@ -14,10 +14,10 @@ import admins from './pages/administrator/index'
 // 订单管理相关组件
 import orderList from './pages/order/orderList'
 import orderAudit from './pages/order/orderAudit'
-import orderDetail from './pages/order/orderDetail'
+// import connectRoute from './utils/connectRoute'
 
 class App extends Component {
-  state = {}
+
   render() {
     return (
       // 设置路由 
@@ -35,8 +35,7 @@ class App extends Component {
 
                 {/* 订单管理的路由 */}
                  <Route exact path='/admin/order/List'   component={orderList}></Route>
-                 <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>
-                 <Route exact path='/admin/order/Detail/:oId'  component={orderDetail}></Route>    
+                 <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
               </Admin>
             )
           }}></Route>
@@ -44,6 +43,9 @@ class App extends Component {
     )
   }
 }
+
+
+
 
 export default App;
 

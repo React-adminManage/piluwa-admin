@@ -1,17 +1,17 @@
 import React,{Component} from 'react'
-import {Card,Descriptions,Tag,Table,Divider } from 'antd'
+import {Card,Descriptions,Tag,Table } from 'antd'
 import Style from './index.module.less'
 
 
 
 const statusobj={
     '0':{txt:'未付款',color:'volcano'},
-    '1':{txt:'已付款',color:'purple'},
+    '1':{txt:'发货中',color:'purple'},
     '2':{txt:'已完成',color:'cyan'},
     '3':{txt:'已取消',color:'red'},
     '4':{txt:'审核中',color:'blue'},
-}
-
+    '5':{txt:'已退款',color:'black'},
+  }
 const columns = [
     {
         title: '商品Id',
@@ -27,7 +27,7 @@ const columns = [
       title: '缩略图',
       dataIndex: 'img',
       key: 'img',
-      render: text => <img  className={Style['tab-pic']} src={text}></img>,
+      render: text => <img alt='' className={Style['tab-pic']} src={text}></img>,
     },
     {
         title: '选择规格',
