@@ -10,14 +10,12 @@ const { TabPane } = Tabs;
 // 有个页面切换页数的bug  日后修复
   const statusobj={
     '0':{txt:'未付款',color:'volcano'},
-    '1':{txt:'已付款',color:'purple'},
+    '1':{txt:'发货中',color:'purple'},
     '2':{txt:'已完成',color:'cyan'},
     '3':{txt:'已取消',color:'red'},
     '4':{txt:'审核中',color:'blue'},
-}
-
-
-
+    '5':{txt:'已退款',color:'black'},
+  }
 class orderList extends Component {
     state = {
         showData:{},
@@ -132,9 +130,9 @@ class orderList extends Component {
                     <Tabs tabPosition='top' animated={false} defaultActiveKey="all" onChange={this.callback}>
                         <TabPane tab="全部" key="all">
                         </TabPane>
-                        <TabPane tab="待付款" key="0">
+                        <TabPane tab="未付款" key="0">
                         </TabPane>
-                        <TabPane tab="已付款" key="1">
+                        <TabPane tab="发货中" key="1">
                         </TabPane>
                         <TabPane tab="已完成" key="2">
                         </TabPane>
@@ -142,13 +140,15 @@ class orderList extends Component {
                         </TabPane>
                         <TabPane tab="审核中" key="4">
                         </TabPane>
+                        <TabPane tab="已退款" key="5">
+                        </TabPane>
                        
                     </Tabs>
                     {/* 搜索 */}
                     <div className={Style.search}>
                       <div className={Style.lab}>
-                        <label>订单号: </label><Input className={Style.inp} placeholder="请输入" ref='oId' />
-                        <label>用户: </label><Input className={Style.inp} placeholder="请输入"  ref='oUser'/>
+                        <label>订单号: </label><Input className={Style.inp} placeholder="请输入" ref="oId" />
+                        <label>用户: </label><Input className={Style.inp} placeholder="请输入"  ref="oUser"/>
                       </div>
                       <div className={Style.btn}>
                         <Button type="primary" className={Style.bt} onClick={()=>{ //点击进行多条件模糊查询

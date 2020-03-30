@@ -3,9 +3,10 @@ import CustomNav from '../../components/CustomNav'
 import HeaderNav from '../../components/HeaderNav'
 import { Layout } from 'antd';
 import Style from './index.module.less'
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 class Admin extends Component {
   state = {  }
+
   render() { 
     return ( 
       <Layout className={Style.wrapper}>
