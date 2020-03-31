@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
-import { Menu } from 'antd';
+import { Menu,Icon } from 'antd';
 import menuList from './menulist'
 // import {
 //   HomeOutlined,
@@ -17,7 +17,18 @@ function handleClick(e) {
   this.props.history.replace(path)
 }
 class CustomNav extends React.Component {
+  // state={
+  //   collapsed: false,
+  // }
+  // toggle = () => {
+  //   this.setState({
+  //     collapsed: !this.state.collapsed,
+  //   });
+  // };
   renderIcon(icon){
+    return (
+      <Icon type={icon} />
+    )
   }
   renderItem(data){
     return data.map((item,index)=>{
@@ -47,9 +58,9 @@ class CustomNav extends React.Component {
   }
   render(){
     return(
-    <Menu onClick={handleClick.bind(this)} style={{ width: 200 }} mode="inline" theme='dark' >
-      {this.renderItem(menuList)}
-    </Menu>
+      <Menu onClick={handleClick.bind(this)} style={{ width: 200 }} mode="inline" theme='dark' >
+        {this.renderItem(menuList)}
+      </Menu>
     )
   }
 }
