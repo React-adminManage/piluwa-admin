@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { HashRouter, Route } from 'react-router-dom'  //引入路由
 
 // 下面引入组件
@@ -55,16 +54,6 @@ class App extends Component {
       </HashRouter>
     )
   }
-=======
-import Routers from './router/router'
-
-function App() {
-  return (
-    <div className="App">
-     <Routers></Routers>
-    </div>
-  );
->>>>>>> aaf1564c6462bc5040be06833bdfa0572950e4ce
 }
 export default App;
 
