@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import style from './index.module.less'
-import { Card, Table, Button, Modal, notification, Spin, Popconfirm,message } from 'antd';
+import { Card, Table, Button, Modal, notification, Spin, Popconfirm, message, Tag } from 'antd';
 import AdminApi from '../../api/AdminApi'
 // let columns =
+let statusobj = {
+    '0': { txt: '审核完毕', color: 'cyan' },
+    '1': { txt: '待审核', color: 'blue' },
+}
+let ButterMan = {
+    '0': { txt: '良民', color: 'skyblue' },
+    '1': { txt: '汉奸', color: 'orange' }
+}
 class Admins extends Component {
     state = {
         dataSource: [],
@@ -14,9 +22,9 @@ class Admins extends Component {
             //     dataIndex: '_id',
             //     // key: '_id',
             //     id: '1'
-               
+
             // },
-             // 每個low加一個id 並且在table 裡面加rowaKey={row=>row._id}  接觸報錯
+            // 每個low加一個id 並且在table 裡面加rowaKey={row=>row._id}  接觸報錯
             {
                 title: '用户名',
                 dataIndex: 'userName',
@@ -34,37 +42,20 @@ class Admins extends Component {
                 dataIndex: 'Status',
                 // key: '状态',
                 id: '4',
-                render:()=> {
-                    // 为什么this.change().length  ===0
-                    for(let i=0;i<= this.change().length;i++){
-                        
-                        if( this.change()[i].Status===1){
-                            return (
-                                <div>
-                                  <Button type='dashed' size='small' icon="bulb">在线</Button>
-                              </div>
-                            )
-                            
-                        }else{
-                            return (
-                                <div>
-                                  <Button type='dashed' size='small' icon="bulb">不在线</Button>
-                              </div>
-                            )
-                        }
-                    } 
-                }
+                // render(oStatus) {
+                //     return (
+                //         <Tag color={statusobj[oStatus].color}>{statusobj[oStatus].txt}</Tag>
+                //     )
+                // }
             },
             {
                 title: '身份',
                 dataIndex: 'identity',
                 // key: '状态',
                 id: '5',
-                render:()=> {
+                render(oStatus) {
                     return (
-                        <div>
-                          <Button type='primary' size='small' icon="user">良民</Button>
-                      </div>
+                        <Tag color={ButterMan[oStatus].color}>{ButterMan[oStatus].txt}</Tag>
                     )
                 }
             },
@@ -72,22 +63,22 @@ class Admins extends Component {
                 title: '操作',
                 key: 'action',
                 id: '6',
-                render:(record)=> {
+                render: (record) => {
                     // 自定义渲染的列表
                     return (
                         <div>
-                        <Popconfirm
-                          title="你确定要删除这个用户吗?"
-                          onConfirm={() => {
-                            this.del(record._id)
-                          }}
-                          onCancel={() => {
-                            message.error('取消删除');
-                          }}
-                        >
-                          <Button type='danger' size='small'>删除</Button>
-                        </Popconfirm>
-                      </div>
+                            <Popconfirm
+                                title="你确定要删除这个用户吗?"
+                                onConfirm={() => {
+                                    this.del(record._id)
+                                }}
+                                onCancel={() => {
+                                    message.error('取消删除');
+                                }}
+                            >
+                                <Button type='danger' size='small'>删除</Button>
+                            </Popconfirm>
+                        </div>
                     )
                 }
             },
@@ -97,17 +88,17 @@ class Admins extends Component {
     // 根据后端返回的不同数字  渲染不同的内容
     change = async () => {
         let result = await AdminApi.list()
-        let arr=[]
-        for(let i=0;i<=result.adminList.length;i++){
+        let arr = []
+        for (let i = 0; i <= result.adminList.length; i++) {
             arr.push(result.adminList[i])
         }
         return arr
-        
+
     }
     //  删除管理员数据
-    del = async(_id) => {
+    del = async (_id) => {
         // 获取到id 之后 调用接口删除id
-        console.log('删除',_id);
+        // console.log('删除',_id);
         let result = await AdminApi.del(_id)
         // 根据结果进行
         if (result.code !== 0) { return false }
@@ -119,7 +110,6 @@ class Admins extends Component {
     handleOk = async () => {
         //  先获取输入内容
         console.log("1");
-
         let userName = this.refs.us.value
         let passWord = this.refs.ps.value
         let result = await AdminApi.add({ userName, passWord })
@@ -146,8 +136,8 @@ class Admins extends Component {
     refreshList = async () => {
         // 重新再进行一步网络请求数据
         let result = await AdminApi.list()
-        console.log(result);
-        
+        // console.log(result);
+
         this.setState({ dataSource: result.adminList, spinning: false })
     }
     //  代表失败的回调
@@ -160,7 +150,7 @@ class Admins extends Component {
     }
     render() {
         const { size } = this.state;
-        let { dataSource, visible, spinning,columns} = this.state
+        let { dataSource, visible, spinning, columns } = this.state
         return (
             <div className={style.admins}>
                 <Card title='管理员列表'>

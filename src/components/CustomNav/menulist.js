@@ -9,7 +9,19 @@ export default[
     key:'1',
     title:"类别管理",
     icon:'home',
-    path:'/admin/classify'
+    path:'/admin/classify',
+    children:[
+      {
+        key:'1-1',
+        title:"分类列表",
+        path:'/admin/type/find'
+       },
+      {
+       key:'1-2',
+       title:"分类添加",
+       path:'/admin/type/add'
+     }
+    ]
   },
   {
    key:'2',

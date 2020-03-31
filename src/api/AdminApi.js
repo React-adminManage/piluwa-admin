@@ -13,7 +13,7 @@ class Admin {
         // 模板字符串写法
         // return Axios.delete(`${url}/${_id}`)
         // 拼接法
-        return Axios.delete(url+'/'+_id)
+        return Axios.post(url+'/'+_id)
 
     }
 }

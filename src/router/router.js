@@ -9,6 +9,8 @@ import Admin from '@pages/Admin'  //引入管理组件
 import ShopList from '@pages/Shop/ShopList'
 import ShopAdd from '@pages/Shop/ShopAdd'
 
+// 用户管理
+import User from '@pages/User/index'
 // 管理路由
 import admins from '@pages/administrator/index'
 // 订单管理相关组件
@@ -33,6 +35,9 @@ class Routers extends Component {
   
                   {/* 管理管理路由 */}
                   <Route path='/admin/administrator' component={admins}></Route>
+
+                  {/* 用户管理 */}
+                  <Route path='/admin/user' component={User}></Route>
   
                   {/* 订单管理的路由 */}
                    <Route exact path='/admin/order/List'   component={orderList}></Route>
