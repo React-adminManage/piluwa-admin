@@ -1,9 +1,13 @@
 import React,{Component} from 'react'
+import Style from './index.module.less'
 class Home extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>这里是主页</div>
+            <div className={Style.sayhello}>
+                <img src='ava.png'></img>
+                <span>hello,admin,祝您开心每一天!</span>
+            </div>
          );
     }
 }

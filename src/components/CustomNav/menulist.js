@@ -3,7 +3,7 @@ export default[
     key:'0',
     title:"主页面",
     icon:'home',
-    path:'/home'
+    path:'/admin/home'
   },
   {
     key:'1',
