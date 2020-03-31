@@ -3,18 +3,19 @@ export default[
     key:'0',
     title:"主页面",
     icon:'home',
-    path:'/home'
+    path:'/admin/home'
   },
   {
     key:'1',
     title:"类别管理",
-    icon:'home',
+    icon:'appstore',
     path:'/admin/classify',
     children:[
       {
         key:'1-1',
         title:"分类列表",
-        path:'/admin/type/find'
+        path:'/admin/type/find',
+        icon:'ordered-list',
        },
       {
        key:'1-2',
@@ -26,59 +27,67 @@ export default[
   {
    key:'2',
    title:'商品管理',
-   icon:'user',
+   icon:'shop',
    path:'/admin/shop',
    children:[
      {
        key:'2-1',
        title:"商品列表",
-       path:'/admin/shop/shopList'
+       path:'/admin/shop/shopList',
+       icon:'ordered-list',
       },
      {
       key:'2-2',
       title:"商品添加",
-      path:'/admin/shop/shopAdd'
+      path:'/admin/shop/shopAdd',
+      icon:'form',
     }
    ]
   },
   {
     key:'4',
     title:"数据统计",
-    icon:'echarts',
+    icon:'database',
     path:'/admin/echarts',
     children:[
       {
         key:'4-1',
         title:'饼状图',
-        path:'/admin/echarts/pie'
+        path:'/admin/echarts/pie',
+        icon:'pie-chart',
       },
       {
         key:'4-2',
         title:'折线图',
-        path:'/admin/echarts/line'
+        path:'/admin/echarts/line',
+        icon:'line-chart',
       },
       {
         key:'4-3',
         title:'柱状图',
-        path:'/admin/echarts/bar'
+        path:'/admin/echarts/bar',
+        icon:'bar-chart',
       },
     ]
   },
   {
     key:'5',
     title:"订单管理",
-    icon:'echarts',
+    icon:'file-search',
     path:'/admin/order',
     children:[
       {
         key:'5-1',
         title:'订单列表',
-        path:'/admin/order/List'
+        path:'/admin/order/List',
+        icon:'ordered-list',
+        
       },
       {
         key:'5-2',
         title:'订单审核',
-        path:'/admin/order/Audit'
+        path:'/admin/order/Audit',
+        icon:'edit',
       },
     ]
   },
@@ -91,13 +100,13 @@ export default[
   {
     key:'8',
     title:"管理员管理",
-    icon:'administrator',
+    icon:'team',
     path:'/admin/administrator'
   },
   {
     key:'9',
     title:"系统设置",
-    icon:'set',
+    icon:'setting',
     path:'/admin/set'
   },
 ]

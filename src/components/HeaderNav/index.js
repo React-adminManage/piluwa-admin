@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 
 
@@ -14,18 +14,20 @@ let langData =[
 ]
 function createMenu(data){
  return (
-   <Menu>
-     {data.map((item,index)=>{
-       return(         
-          <Menu.Item key={index}>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-            <Icon type={item.icon} />{item.name}
-            </a>
-            <Menu.Divider></Menu.Divider>
-          </Menu.Item>
-       )
-     })}
-   </Menu>
+    <Fragment>
+    <Menu>
+      {data.map((item,index)=>{
+        return(   
+            <Menu.Item key={index}>
+              <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+              <Icon type={item.icon} />{item.name}
+              </a>
+              <Menu.Divider></Menu.Divider>
+            </Menu.Item>
+        )
+      })}
+    </Menu>
+   </Fragment>
  )
 }
 class HeaderNav extends Component {

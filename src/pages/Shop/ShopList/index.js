@@ -1,15 +1,15 @@
 import React,{Component, Fragment} from 'react'
 import style from './index.module.less'
-import {Card, message,Table,Tag, Button,Pagination,Popconfirm,} from 'antd'
+import {Card, message,Table,Tag, Button,Pagination,Popconfirm,Spin } from 'antd'
 import goodsApi from '../../../api/goods'
 class ShopList extends Component {
-    
      
         state = { 
             page:1, 
             pageSize:4,
             result:[],
             allcount:0,
+            loading: true,
             columns:[{title: 'ID',dataIndex: '_id',key: '_id',width:120,}, 
             {title: '名称',dataIndex: 'title',key: 'title',width:120,}, 
             {title: '原价',dataIndex: 'originalPrice',key: 'originalPrice',width:120,render(originalPrice){
@@ -33,9 +33,9 @@ class ShopList extends Component {
                 )
             }}, 
             {title: '描述',dataIndex: 'describe',key: 'describe', width:460}, 
-            {title: '状态',dataIndex: 'Status',key: 'Status',width:120,render(putaway){
-                 let obj={'0':{color:'red',msg:'已下架'},'1':{color:'green',msg:'已上架'}}
-                return(
+            {title: '状态',dataIndex: 'Status',key: 'Status',width:120,render:(putaway)=>{
+                 let obj={'0':{color:'red',msg:'已下架'},'1':{color:'green',msg:'已上架'},'-1':{color:'orange',msg:'待上架     '}}
+                return( 
                 <Tag color={obj[putaway].color}>{obj[putaway].msg}</Tag>
                 )
             }}, 
@@ -47,9 +47,19 @@ class ShopList extends Component {
                         }}>
                             <Button type='danger' size='small' >删除</Button>
                         </Popconfirm>
-                       
-                        <Button type='warn' size='small'>上架</Button>
+                    
+                    <Popconfirm title='你确定要上架或者下架吗？' 
+                    onConfirm={()=>{this.putawayGoods(recode._id,recode.Status)
+                    
+                    }}
+                    >
+                         <Button type='warn' size='small'>上架</Button>
+                    </Popconfirm>
+                     
+                    <Popconfirm title='你确定要修改吗？' onConfirm={()=>{console.log('开始修改')}}>
                         <Button type='primary' size='small'>修改</Button>
+                    </Popconfirm>
+                       
                     </div>
                 )
             }}, 
@@ -68,46 +78,63 @@ class ShopList extends Component {
          let result = await goodsApi.del(_id)
          this.getListData() 
      }
+     //上架商品
+     putawayGoods= async (_id,putaway)=>{
+        let result = await goodsApi.putaway(_id,putaway)
+        if(putaway===1){
+            putaway=0
+        }else{
+            putaway=1
+        }
+        let {code,msg} = await goodsApi.putaway(_id,putaway)
+        if(code){
+            return message.error(msg)
+        }
+        this.getListData() 
+     }
      //获取商品数据
     getListData= async ()=>{
         let {page,pageSize} = this.state
         goodsApi.list(page,pageSize).then((pramas)=>{
            this.setState({result:pramas.shopList})
-           this.setState({allcount:pramas.allcount})
-            
-        })
-
-        
+           this.setState({allcount:pramas.allcount}) 
+           this.setState({loading:false}) 
+        })   
     }
+    
     render() { 
         let {result, columns,allcount,pageSize} = this.state
         
         return ( 
             <div className={style.box}>    
-           
-            <Card title='商品列表' className={style.Card}>
-            {/* {this.state.result.map((item,index)=>{
-                return (
-                <p key={index}>{item._id}</p>
-                )
-            })} */}
-            <Table scroll={{y:600,x:500}} 
-            columns={columns} 
-            pagination={false}
-            dataSource={result}
-            rowKey='_id'>
+            
+                <Card title='商品列表' className={style.Card}>
+                    <Button type='primary' onClick={()=>{
+                        this.props.history.push('/admin/shop/shopAdd')
+                    }}>商品添加</Button>
+                {/* {this.state.result.map((item,index)=>{
+                    return (
+                    <p key={index}>{item._id}</p>
+                    )
+                })} */}
+                    <Spin className={style.Spin} delay={500} tip='loading...' spinning={this.state.loading}>
+                            <Table scroll={{y:600,x:500}} 
+                            columns={columns} 
+                            pagination={false}
+                            dataSource={result}
+                            rowKey='_id'>
 
-            </Table>
-            <Pagination showQuickJumper defaultCurrent={1} total={allcount } pageSize={pageSize}  
-            onChange={(page,pageSize)=>{
-                console.log(page)
-                this.setState({page},()=>{
-                    this.getListData()
-                })
-                
-            }}
-            />
-            </Card>
+                            </Table>
+                            <Pagination showQuickJumper defaultCurrent={1} total={allcount } pageSize={pageSize}  
+                            onChange={(page,pageSize)=>{
+                                console.log(page)
+                                this.setState({page},()=>{
+                                    this.getListData()
+                                })  
+                            }}
+                            />
+                     </Spin>      
+                </Card>  
             </div>
          );
     }
