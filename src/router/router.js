@@ -30,6 +30,7 @@ class Routers extends Component {
               return(  
                 <Admin>
                    <Route path='/admin/shop/shopList' component={ShopList}></Route> 
+                   <Route path='/admin/shop/shopAdd' component={ShopAdd}></Route> 
   
                   {/* 管理管理路由 */}
                   <Route path='/admin/administrator' component={admins}></Route>

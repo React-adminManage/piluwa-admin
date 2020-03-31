@@ -18,6 +18,15 @@ class Goods{
        return axios.post(url,{_id,Status})
        
    }
+   addGoods(arguements){
+    let  url=`${HOST}/shop/add`
+    return axios.post(url,arguements)
+   }
+
+   goodsClass(){
+    let  url=`${HOST}/type/find`
+    return axios.get(url)
+   }
 }
 
 export default new Goods()
