@@ -24,6 +24,7 @@ class Routers extends Component {
         // 设置路由 
         <HashRouter>
           <Switch>
+            {/* 重定向  默认进入login页面 */}
             <Redirect from='/' to='/login' exact/>
             {/* 一级路由模板   路径对应组件 */}
             <Route path='/login' component={Login}></Route>
