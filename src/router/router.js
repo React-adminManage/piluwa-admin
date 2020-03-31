@@ -40,7 +40,6 @@ class Routers extends Component {
             <Route path='/admin' render={()=>{  
               return(  
                 <Admin>
-<<<<<<< HEAD
                    <Route path='/admin/shop/shopList' component={ShopList}></Route> 
   
                   {/* 管理管理路由 */}
@@ -52,29 +51,6 @@ class Routers extends Component {
                   {/* 订单管理的路由 */}
                    <Route exact path='/admin/order/List'   component={orderList}></Route>
                    <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
-=======
-                  <Switch>
-                    {/* 重定向 */}
-                    <Redirect from='/admin' to='/admin/home' exact/>
-
-                    {/* 主页面路由 */}
-                    <Route exact path='/admin/home' component={Home}></Route> 
-
-                    {/* 商品管理路由 */}
-                    <Route exact path='/admin/shop/shopList' component={ShopList}></Route> 
-                    <Route path='/admin/shop/shopAdd' component={ShopAdd}></Route> 
-    
-                    {/* 管理员管理路由 */}
-                    <Route exact path='/admin/administrator' component={admins}></Route>
-    
-                    {/* 订单管理的路由 */}
-                    <Route exact path='/admin/order/List'   component={orderList}></Route>
-                    <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
-
-                    {/* 404页面 */}
-                    <Route component={Error}></Route>
-                   </Switch>
->>>>>>> 13843eb5af6a841895aa6305df0ca6f26fd0b1a4
                 </Admin>
               )
             }}>
