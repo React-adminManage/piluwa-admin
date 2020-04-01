@@ -1,9 +1,13 @@
-// axios的拦截器  接口还没做  --保留
+// axios的拦截器 
 
 
 import axios from 'axios'  //引入axios
 
 axios.interceptors.request.use(function (config) {
+  // 调用接口的时候把token加入到请求头
+  let token =localStorage.getItem('token')||'no token'           
+  config.headers.authorization = 'Bearer '+ token 
+  console.log(config)
   return config;
 }, function (error) {
   return Promise.reject(error);
