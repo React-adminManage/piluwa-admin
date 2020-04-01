@@ -15,6 +15,7 @@ class Error extends Component {
         message.error('页面不存在-404错误');
     };
     render() { 
+        
         return ( 
             <div className={Style.error}>
                 <img src="404.png"></img>
