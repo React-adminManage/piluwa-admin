@@ -35,7 +35,7 @@ class Routers extends Component {
         <HashRouter>
           <Switch>
             {/* 重定向  默认进入login页面 */}
-            <Redirect from='/' to='/login' exact/>
+            <Redirect from='/' to='/admin' exact/>
             {/* 一级路由模板   路径对应组件 */}
             <Route path='/login' component={Login}></Route>
             {/* 嵌套路由模板 */}
@@ -58,12 +58,12 @@ class Routers extends Component {
                     {/* 订单管理的路由 */}
                     <Route exact path='/admin/order/List'   component={orderList}></Route>
                     <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
-
+                  
+                    
                     {/* 商品分类的路由 */}
                     <Route exact path='/admin/type/find'   component={Classify}></Route>
                     
                     <Route component={Error}></Route>
-                    
                   </Switch> 
                 </Admin>
               )
