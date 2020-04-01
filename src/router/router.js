@@ -25,8 +25,7 @@ import orderAudit from '@pages/order/orderAudit'
 import Error from '@pages/Error/error'
 
 // 商品分类相关组件
-import ClassifyList from '@pages/Classify/ClassifyList'
-import ClassifyAdd from '@pages/Classify/ClassifyAdd'
+import Classify from '@pages/Classify/index'
 
 class Routers extends Component {
 
@@ -56,8 +55,7 @@ class Routers extends Component {
                    <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
 
                    {/* 商品分类的路由 */}
-                   <Route exact path='/admin/type/find'   component={ClassifyList}></Route>
-                   <Route exact path='/admin/type/add'  component={ClassifyAdd}></Route>  
+                   <Route exact path='/admin/type/find'   component={Classify}></Route> 
                 </Admin>
               )
             }}>

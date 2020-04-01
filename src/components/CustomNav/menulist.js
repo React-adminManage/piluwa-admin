@@ -9,20 +9,7 @@ export default[
     key:'1',
     title:"类别管理",
     icon:'appstore',
-    path:'/admin/classify',
-    children:[
-      {
-        key:'1-1',
-        title:"分类列表",
-        path:'/admin/type/find',
-        icon:'ordered-list',
-       },
-      {
-       key:'1-2',
-       title:"分类添加",
-       path:'/admin/type/add'
-     }
-    ]
+    path:'/admin/type/find'
   },
   {
    key:'2',
