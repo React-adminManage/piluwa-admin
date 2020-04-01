@@ -40,22 +40,31 @@ class Routers extends Component {
             <Route path='/login' component={Login}></Route>
             {/* 嵌套路由模板 */}
             <Route path='/admin' render={()=>{  
-              return(  
+              return(
                 <Admin>
-                   <Route path='/admin/shop/shopList' component={ShopList}></Route> 
-  
-                  {/* 管理管理路由 */}
-                  <Route path='/admin/administrator' component={admins}></Route>
+                  <Switch>
+                    <Redirect from='/admin' to='/admin/home' exact/>
+                    <Route exact path='/admin/home' component={Home}></Route> 
+                    
+                    {/* 商品管理路由 */}
+                    <Route exact path='/admin/shop/shopList' component={ShopList}></Route> 
+                    <Route exact path='/admin/shop/shopAdd' component={ShopAdd}></Route> 
+                    {/* 管理管理路由 */}
+                    <Route exact  path='/admin/administrator' component={admins}></Route>
 
-                  {/* 用户管理 */}
-                  <Route path='/admin/user' component={User}></Route>
-  
-                  {/* 订单管理的路由 */}
-                   <Route exact path='/admin/order/List'   component={orderList}></Route>
-                   <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
+                    {/* 用户管理 */}
+                    <Route exact path='/admin/user' component={User}></Route>
+    
+                    {/* 订单管理的路由 */}
+                    <Route exact path='/admin/order/List'   component={orderList}></Route>
+                    <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
 
-                   {/* 商品分类的路由 */}
-                   <Route exact path='/admin/type/find'   component={Classify}></Route> 
+                    {/* 商品分类的路由 */}
+                    <Route exact path='/admin/type/find'   component={Classify}></Route>
+                    
+                    <Route component={Error}></Route>
+                    
+                  </Switch> 
                 </Admin>
               )
             }}>
