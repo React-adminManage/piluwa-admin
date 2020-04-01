@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 
-import { Card,Button,Input,Tabs,Tag,Table} from 'antd';
+import { Card,Button,Input,Tabs,Tag,Table,message} from 'antd';
 import order from '@api/orderAPI'
 import Style from './index.module.less'
 import OrderDetail from '../orderDetail/index'
@@ -98,6 +98,7 @@ class orderList extends Component {
           pagination,
           oStatus:oStatus
         });
+        message.success('查询成功');
       });
     }
     callback=(key)=> { //tab切换触发axios请求
@@ -152,25 +153,14 @@ class orderList extends Component {
                       </div>
                       <div className={Style.btn}>
                         <Button type="primary" className={Style.bt} onClick={()=>{ //点击进行多条件模糊查询
-                          // this.setState({ loading: true }); //显示加载条
-                          // order.mutilquery({  //数据请求
-                          //   oId:this.refs.oId.state.value,
-                          //   oUser:this.refs.oUser.state.value,
-                          //   oStatus:this.state.oStatus
-                          // }).then((res)=>{
-                          //   const pagination = { ...this.state.pagination };
-                          //   pagination.total = res.allcount;
-                          //   this.setState({
-                          //     loading: false,
-                          //     data: res.orderList,
-                          //     pagination,
-                          //   });
-                          // })
                           this.fetch({
                             results:5,
                             page: 1,
                             oStatus:this.state.oStatus,
                           })
+                            
+                          
+                          
                         }}>查询</Button>
                         <Button className={Style.bt} onClick={()=>{
                             this.refs.oId.state.value='';
