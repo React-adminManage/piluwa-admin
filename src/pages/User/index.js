@@ -4,12 +4,12 @@ import UserApi from '../../api/UserApi'
 import Style from './index.module.less'
 
 const statusobj={
-  '0':{txt:'审核完毕',color:'cyan'},
-  '1':{txt:'待审核',color:'blue'},
+  '0':{txt:'已审核',color:'cyan'},
+  '1':{txt:'未审核',color:'blue'},
 }
 const sex={
-  '0':{txt:'女生',color:'red'},
-  '1':{txt:'男生',color:'gray'},
+  '0':{txt:'女',color:'red'},
+  '1':{txt:'男',color:'gray'},
 }
 class User extends Component {
   state = {
