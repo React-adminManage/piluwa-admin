@@ -16,6 +16,9 @@ import orderList from '@pages/order/orderList'
 import orderAudit from '@pages/order/orderAudit'
 // import connectRoute from './utils/connectRoute'
 
+// 商品分类相关组件
+import ClassifyList from '@pages/Classify/ClassifyList'
+import ClassifyAdd from '@pages/Classify/ClassifyAdd'
 
 class Routers extends Component {
 
@@ -37,6 +40,10 @@ class Routers extends Component {
                   {/* 订单管理的路由 */}
                    <Route exact path='/admin/order/List'   component={orderList}></Route>
                    <Route exact path='/admin/order/Audit'  component={orderAudit}></Route>   
+
+                   {/* 商品分类的路由 */}
+                   <Route exact path='/admin/type/find'   component={ClassifyList}></Route>
+                   <Route exact path='/admin/type/add'  component={ClassifyAdd}></Route>  
                 </Admin>
               )
             }}></Route>
