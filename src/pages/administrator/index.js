@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import style from './index.module.less'
-import { Card, Table, Button, Modal, notification, Spin, Popconfirm, message, Tag } from 'antd';
+import { Card, Table, Button, Modal, notification, Spin, Popconfirm, message, Tag, TreeSelect,Input } from 'antd';
 import AdminApi from '../../api/AdminApi'
 // let columns =
+const { TreeNode } = TreeSelect;
+
 let statusobj = {
-    '0': { txt: '审核完毕', color: 'cyan' },
-    '1': { txt: '待审核', color: 'blue' },
+    '0': { txt: '已审核', color: 'cyan' },
+    '1': { txt: '未审核', color: 'blue' },
 }
 let ButterMan = {
     '0': { txt: '良民', color: 'skyblue' },
@@ -42,11 +44,11 @@ class Admins extends Component {
                 dataIndex: 'Status',
                 // key: '状态',
                 id: '4',
-                // render(oStatus) {
-                //     return (
-                //         <Tag color={statusobj[oStatus].color}>{statusobj[oStatus].txt}</Tag>
-                //     )
-                // }
+                render(oStatus) {
+                    return (
+                        <Tag color={statusobj[oStatus].color}>{statusobj[oStatus].txt}</Tag>
+                    )
+                }
             },
             {
                 title: '身份',
@@ -70,7 +72,7 @@ class Admins extends Component {
                             <Popconfirm
                                 title="你确定要删除这个用户吗?"
                                 onConfirm={() => {
-                                    this.del(record._id)
+                                    this.delAdmin(record._id)
                                 }}
                                 onCancel={() => {
                                     message.error('取消删除');
@@ -85,6 +87,12 @@ class Admins extends Component {
         ]
 
     }
+    // 模态框里面的input改变
+    onChange = value => {
+        console.log(value);
+        this.setState({ value });
+
+    };
     // 根据后端返回的不同数字  渲染不同的内容
     change = async () => {
         let result = await AdminApi.list()
@@ -96,7 +104,7 @@ class Admins extends Component {
 
     }
     //  删除管理员数据
-    del = async (_id) => {
+    delAdmin = async (_id) => {
         // 获取到id 之后 调用接口删除id
         // console.log('删除',_id);
         let result = await AdminApi.del(_id)
@@ -112,7 +120,8 @@ class Admins extends Component {
         console.log("1");
         let userName = this.refs.us.value
         let passWord = this.refs.ps.value
-        let result = await AdminApi.add({ userName, passWord })
+        let status = this.refs.status.value
+        let result = await AdminApi.add({ userName, passWord, status })
         if (result.code !== 0) {
             return notification.error({
                 description: '添加失敗，請詳細的检查参数', message: '错误', duration: 1.5
@@ -171,8 +180,12 @@ class Admins extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    用戶名 :　<input type='text' ref="us" /><br />
-                   密　碼 :　<input type='text' ref="ps" /><br />
+                    用戶名 :　<Input type='text' ref="us"  className={style.inp1} placeholder='请输入用户名'/ ><br />
+                   密　碼 :　<Input type='text' ref="ps" className={style.inp1} placeholder='请输入密码'/><br />
+                   状　态 :　<TreeSelect ref="status" showSearch style={{ width: '150px' }} value={this.state.value} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }} placeholder="请选择状态值" allowClear treeDefaultExpandAll onChange={this.onChange}>
+                        <TreeNode value="1" title="已审核"></TreeNode>
+                        <TreeNode value="0" title="待审核"></TreeNode>
+                    </TreeSelect>
                 </Modal>
             </div>
         );

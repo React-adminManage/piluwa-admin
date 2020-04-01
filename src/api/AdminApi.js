@@ -4,16 +4,17 @@ class Admin {
         let url = 'http://47.97.244.129:3002/admin'
         return Axios.get(url)
     }
-    add(userName,passWord){
+    add(userName,passWord,status){
         let url='http://47.97.244.129:3002/admin/add'
-        return Axios.post(url,{userName,passWord})
+        return Axios.post(url,{userName,passWord,status})
     }
     del(_id){
         let url='http://47.97.244.129:3002/admin/del'
         // 模板字符串写法
         // return Axios.delete(`${url}/${_id}`)
         // 拼接法
-        return Axios.post(url+'/'+_id)
+        // return Axios.post(url+'/'+_id)
+        return Axios.post(url,{_id})
 
     }
 }
