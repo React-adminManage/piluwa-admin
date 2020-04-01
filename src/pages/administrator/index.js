@@ -87,22 +87,17 @@ class Admins extends Component {
         ]
 
     }
-    // 模态框里面的input改变
-    onChange = value => {
-        console.log(value);
-        this.setState({ value });
-
-    };
+    
     // 根据后端返回的不同数字  渲染不同的内容
-    change = async () => {
-        let result = await AdminApi.list()
-        let arr = []
-        for (let i = 0; i <= result.adminList.length; i++) {
-            arr.push(result.adminList[i])
-        }
-        return arr
+    // change = async () => {
+    //     let result = await AdminApi.list()
+    //     let arr = []
+    //     for (let i = 0; i <= result.adminList.length; i++) {
+    //         arr.push(result.adminList[i])
+    //     }
+    //     return arr
 
-    }
+    // }
     //  删除管理员数据
     delAdmin = async (_id) => {
         // 获取到id 之后 调用接口删除id
@@ -116,17 +111,19 @@ class Admins extends Component {
     }
     //  代表成功的回调
     handleOk = async () => {
+        // 点击ok 确定的时候
         //  先获取输入内容
-        console.log("1");
         let userName = this.refs.us.value
         let passWord = this.refs.ps.value
-        let status = this.refs.status.value
-        let result = await AdminApi.add({ userName, passWord, status })
+        let Status = this.refs.ss.value
+        console.log('点击handleOk ok');
+        
+        let result = await AdminApi.add({ userName, passWord, Status })
         if (result.code !== 0) {
             return notification.error({
                 description: '添加失敗，請詳細的检查参数', message: '错误', duration: 1.5
 
-            })
+            })  
         }
         notification.success({ description: '管理员添ok，模态框即将关闭', message: '成功', duration: 1.5 })
         this.setState({ visible: false })
@@ -138,7 +135,6 @@ class Admins extends Component {
         // 添加接头
         // 关闭模态框
         // 刷新页面
-        console.log('点击handleOk +ok');
 
     }
     // 数据添加后刷新我们的列表数据
@@ -152,11 +148,19 @@ class Admins extends Component {
     //  代表失败的回调
     handleCancel = () => {
         this.setState({ visible: false })
+        console.log('点击handleCancel取消');
+        
 
     }
     componentDidMount() {
         this.refreshList()
     }
+    // 模态框里面的input改变
+    onChange = value => {
+        console.log(value);
+        this.setState({ value });
+
+    };
     render() {
         const { size } = this.state;
         let { dataSource, visible, spinning, columns } = this.state
@@ -180,12 +184,13 @@ class Admins extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    用戶名 :　<Input type='text' ref="us"  className={style.inp1} placeholder='请输入用户名'/ ><br />
-                   密　碼 :　<Input type='text' ref="ps" className={style.inp1} placeholder='请输入密码'/><br />
-                   状　态 :　<TreeSelect ref="status" showSearch style={{ width: '150px' }} value={this.state.value} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }} placeholder="请选择状态值" allowClear treeDefaultExpandAll onChange={this.onChange}>
+                    用戶名 :　<input type='text' ref="us"  className={style.inp1} placeholder='请输入用户名'/ ><br />
+                   密　碼 :　<input type='text' ref="ps" className={style.inp1} placeholder='请输入密码'/><br />
+                   {/* 状　态 :　<TreeSelect ref="Status" showSearch style={{ width: '150px' }} value={this.state.value} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }} placeholder="请选择状态值" allowClear treeDefaultExpandAll onChange={this.onChange}>
                         <TreeNode value="1" title="已审核"></TreeNode>
                         <TreeNode value="0" title="待审核"></TreeNode>
-                    </TreeSelect>
+                    </TreeSelect> */}
+                    状　态 :　<input type='text' ref="ss" className={style.inp1} placeholder='请输入状态码'/><br />
                 </Modal>
             </div>
         );

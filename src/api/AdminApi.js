@@ -4,9 +4,13 @@ class Admin {
         let url = 'http://47.97.244.129:3002/admin'
         return Axios.get(url)
     }
-    add(userName,passWord,status){
+    add({userName,passWord,Status}){
+        console.log(userName);
+        console.log(passWord);
+        console.log(Status);
+        
         let url='http://47.97.244.129:3002/admin/add'
-        return Axios.post(url,{userName,passWord,status})
+        return Axios.post(url,{userName,passWord,Status})
     }
     del(_id){
         let url='http://47.97.244.129:3002/admin/del'
