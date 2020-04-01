@@ -23,9 +23,19 @@ class Goods{
     return axios.post(url,arguements)
    }
 
+   updateGoods(data){
+       let url=`${HOST}/shop/edit`
+       return axios.post(url,data)
+   }
+
    goodsClass(){
     let  url=`${HOST}/type/find`
     return axios.get(url)
+   }
+   //根据一个ID查找相应商品的信息
+   findOne(id){
+    let  url=`${HOST}/shop/getById`
+    return axios.post(url,{_id:id})
    }
 }
 

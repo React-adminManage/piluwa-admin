@@ -56,9 +56,11 @@ class ShopList extends Component {
                          <Button type='warn' size='small'>上架</Button>
                     </Popconfirm>
                      
-                    <Popconfirm title='你确定要修改吗？' onConfirm={()=>{console.log('开始修改')}}>
-                        <Button type='primary' size='small'>修改</Button>
-                    </Popconfirm>
+                     
+                        <Button type='primary' size='small' onClick={()=>{
+                            this.props.history.replace('/admin/shop/ShopUpdate/:id'+recode._id)
+                        }} >修改</Button>
+                     
                        
                     </div>
                 )

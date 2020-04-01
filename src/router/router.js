@@ -11,6 +11,7 @@ import Home from '@pages/Home/home'
 // 商品管理相关组件
 import ShopList from '@pages/Shop/ShopList'
 import ShopAdd from '@pages/Shop/ShopAdd'
+import ShopUpdate from '@pages/Shop/ShopUpdate'
 
 // 用户管理
 import User from '@pages/User/index'
@@ -49,6 +50,7 @@ class Routers extends Component {
                     {/* 商品管理路由 */}
                     <Route exact path='/admin/shop/shopList' component={ShopList}></Route> 
                     <Route exact path='/admin/shop/shopAdd' component={ShopAdd}></Route> 
+                    <Route exact path='/admin/shop/ShopUpdate/:id' component={ShopUpdate}></Route> 
                     {/* 管理管理路由 */}
                     <Route exact  path='/admin/administrator' component={admins}></Route>
 
