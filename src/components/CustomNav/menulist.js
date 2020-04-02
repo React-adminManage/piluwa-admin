@@ -92,8 +92,8 @@ export default[
   },
   {
     key:'9',
-    title:"系统设置",
+    title:"系统日志",
     icon:'setting',
-    path:'/admin/set'
+    path:'/admin/log'
   },
 ]

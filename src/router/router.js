@@ -28,6 +28,9 @@ import Error from '@pages/Error/error'
 // 商品分类相关组件
 import Classify from '@pages/Classify/index'
 
+// 系统日志
+import Log from '@pages/Log/index'
+
 class Routers extends Component {
 
     render() {
@@ -65,6 +68,9 @@ class Routers extends Component {
                     {/* 商品分类的路由 */}
                     <Route exact path='/admin/type/find'   component={Classify}></Route>
                     
+
+                    {/* 系统日志 */}
+                    <Route exact path='/admin/log'   component={Log}></Route>
                     <Route component={Error}></Route>
                   </Switch> 
                 </Admin>
