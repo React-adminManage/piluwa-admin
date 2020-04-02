@@ -1,4 +1,4 @@
-import {CHANGE_NAME,CHANGE_AGE}  from './actionTypes'
+import {CHANGE_NAME,CHANGE_AGE,CHANGE_LimitShow}  from './actionTypes'
 
 // 大臣 写奏折
 export default{
@@ -27,6 +27,12 @@ export default{
     return{
       type:CHANGE_AGE,
       payload:99
+    }
+  },
+  [CHANGE_LimitShow](){
+    return{
+      type:CHANGE_LimitShow,
+      // payload:99
     }
   },
 

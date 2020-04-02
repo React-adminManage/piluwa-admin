@@ -4,10 +4,14 @@ import { Card,Button,Input,Tabs,Tag,Table,message} from 'antd';
 import order from '@api/orderAPI'
 import Style from './index.module.less'
 import OrderDetail from '../orderDetail/index'
+
+import actionCreator from '../../../store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
 const { TabPane } = Tabs;
 
 
-// 有个页面切换页数的bug  日后修复
   const statusobj={
     '0':{txt:'未付款',color:'volcano'},
     '1':{txt:'发货中',color:'purple'},
@@ -90,6 +94,15 @@ class orderList extends Component {
         })
       }
       request.then(data => {
+        if(data.code==403){
+          this.setState({
+            loading: false,  //关闭loading
+          })
+          console.log(this);
+          this.props['CHANGE_LimitShow']();
+          return 
+          
+        }
         const pagination = { ...this.state.pagination };
         pagination.total = data.allcount; //总记录数 
         this.setState({
@@ -98,7 +111,7 @@ class orderList extends Component {
           pagination,
           oStatus:oStatus
         });
-        message.success('查询成功');
+        // message.success('查询成功');
       });
     }
     callback=(key)=> { //tab切换触发axios请求
@@ -188,4 +201,7 @@ class orderList extends Component {
     }
 }
  
-export default orderList;
+
+export default connect(state=>state,(dispath)=>{
+  return bindActionCreators(actionCreator,dispath)
+})(orderList);
