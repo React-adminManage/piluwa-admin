@@ -27,7 +27,7 @@ class HeaderNav extends Component {
        <Menu onClick={this.onClick}>
          {data.map((item,index)=>{
            return(   
-               <Menu.Item key={index}>
+               <Menu.Item key={item.name}>
                  <span rel="noopener noreferrer">
                  <Icon type={item.icon} />{item.name}
                  </span>
@@ -40,8 +40,8 @@ class HeaderNav extends Component {
     )
    }
   onClick = ({ key }) => {
-    if(key==2){
-        console.log('退出登录')
+    console.log(key)
+    if(key=='退出登录'){
         message.info(`退出登录,3s后进行页面跳转`);
         setTimeout(() => {
           // 清除本地local
