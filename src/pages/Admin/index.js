@@ -3,7 +3,7 @@ import {withRouter}  from 'react-router-dom'
 import CustomNav from '../../components/CustomNav'
 import HeaderNav from '../../components/HeaderNav'
 import Limit from '../../components/Limit'
-import { Layout, message,notification,Button } from 'antd';
+import { Layout, message } from 'antd';
 import Style from './index.module.less'
 
 import actionCreator from '../../store/actionCreator'
@@ -12,18 +12,6 @@ import {connect} from 'react-redux'
 
 
 const { Header, Content, Sider } = Layout;
-
-
-const openNotification = () => {
-  notification.open({
-    message: 'Notification Title',
-    description:
-      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-    onClick: () => {
-      console.log('Notification Clicked!');
-    },
-  });
-};
 
 class Admin extends Component {
   componentDidMount=()=>{
@@ -52,7 +40,7 @@ class Admin extends Component {
           <div style={{background:'#fff',textAlign: 'center'}}>
               {/* <img style={{width:'82px'}} alt='' > */}
               <div className={Style.logo}>
-                  <img src='logo.jpg'></img>
+                  <img src='logo.jpg' alt=''></img>
               </div>
             
           </div>
