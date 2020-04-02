@@ -19,9 +19,9 @@ function createMenu(data){
       {data.map((item,index)=>{
         return(   
             <Menu.Item key={index}>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+              <span rel="noopener noreferrer">
               <Icon type={item.icon} />{item.name}
-              </a>
+              </span>
               <Menu.Divider></Menu.Divider>
             </Menu.Item>
         )
