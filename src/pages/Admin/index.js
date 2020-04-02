@@ -69,8 +69,8 @@ class Admin extends Component {
         {/* <Footer style={ {height:'10%'} }>Ant Design ©2018 Created by Ant UED</Footer> */}
       </Layout>
     </Layout>
-    {/* 根据全局状态值判断权限是否满足 */}
-    {LimitShow?'':<Limit></Limit>}   
+        {/* 根据全局状态值判断权限是否满足 */}
+        {LimitShow?'':<Limit></Limit>}   
     </Fragment>
      );
   }
