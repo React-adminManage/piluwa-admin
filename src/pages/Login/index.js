@@ -3,12 +3,11 @@ import style from './index.module.less'
 import api from '@api/loginAPI'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 class Login extends Component {
+  state = { check:false }
+
   login = () => {
-    // console.log('登录', this)
+    let Tpass=''
     let {validateFields} = this.props.form //用户获取表单数据的值
-    // 获取输入值不管是否满足条件
-    // let result = getFieldsValue()
-    // console.log(result)
     // 校验输入的值
     validateFields((err,data)=>{
       console.log(err,data)
@@ -21,8 +20,16 @@ class Login extends Component {
           if(res.code === 404){
             message.error('用户名密码错误')
           }else{
+            if(this.state.check) {
+              Tpass = data.passWord//  勾选记住密码将密码存入localStorage,否则存入的密码vlaue为空
+            }
+            let userMsg={
+              'userName':data.userName,
+              'passWord':Tpass,
+              'token':res.token
+            }
             // 登录成功获取token并且保存到localstorage里 
-            localStorage.setItem('token',res.token)
+            localStorage.setItem('userMsg',JSON.stringify(userMsg))
             message.success('登录成功，3s后跳转首页',3,()=>{
               this.props.history.replace('/admin')
             })
@@ -35,9 +42,10 @@ class Login extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     // getFieldDecorator返回一个高阶组件 用于和表单进行双向数据绑定
+    let { check } = this.state;
     return (
       <div className={style['login-box']}>
-        <p>皮噜娃商城后台管理系统</p>
+        {/* <p>皮噜娃商城后台管理系统</p> */}
         <div className={style['login-form']}>
           {/* 用户名 */}
           <Form.Item>
@@ -68,15 +76,16 @@ class Login extends Component {
           </Form.Item>
           {/* 记住我  提交*/}
           <Form.Item>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox  onClick={() => { 
+              this.setState({ check: !check }) 
+              }} >记住密码</Checkbox>
             <span className="login-form-forgot" style={{ color: 'rgba(245, 133, 6,.75)' }}>
-                Forgot password
+                忘记密码
           </span>
           <br/>
-            <Button type="primary" onClick={this.login} className="login-form-button">
-              Log in
+            <Button type="primary" onClick={this.login} className="login-form-button" style={{ marginLeft:'187px' }}>
+              登录
           </Button>
-          Or <span style={{ color: 'rgba(245, 133, 6,.75)' }}>register now!</span>
           </Form.Item>
         </div>
       </div>

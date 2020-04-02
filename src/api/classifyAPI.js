@@ -16,5 +16,9 @@ class Classify {
         let url = `${HOST}/type/del`
         return axios.post(url,{_id:_id})
     }
+    modify(id,type) {
+        let url = `${HOST}/type/edit`
+        return axios.post(url,{_id:id,Type:type})
+    }
 }
 export default new Classify()
