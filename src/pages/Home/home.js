@@ -7,7 +7,7 @@ class Home extends Component {
         return ( 
             <Fragment>
                 <div className={Style.sayhello}>
-                    <img src='ava.png'></img>
+                    <img src='ava.png' alt=''></img>
                     <span>欢迎登录,祝您开心每一天!</span>
                 </div>
                 <div className={Style.cards}>

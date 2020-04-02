@@ -67,7 +67,7 @@ class ClassifyList extends Component {
     //修改商品种类
     EditType = async (_id) => {
         let { code, msg } = await classifyAPI.modify(_id, this.state.typeName)
-        if(code ==403) {
+        if(code ===403) {
             console.log(this)
         }
         console.log(this)
@@ -89,7 +89,7 @@ class ClassifyList extends Component {
     //删除商品分类
     delType = async (_id) => {
         let { code, msg } = await classifyAPI.del(_id)
-        if(code ==403){
+        if(code ===403){
             this.props['CHANGE_LimitShow']();
             return
         }

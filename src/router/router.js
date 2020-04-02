@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { HashRouter, Route,Redirect,Switch  } from 'react-router-dom'  //引入路由
 import loadable from '../utils/loadable'
 

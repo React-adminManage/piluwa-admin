@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 
-import { Card,Button,Input,Tabs,Tag,Table,message} from 'antd';
+import { Card,Button,Input,Tabs,Tag,Table} from 'antd';
 import order from '@api/orderAPI'
 import Style from './index.module.less'
 import OrderDetail from '../orderDetail/index'
@@ -31,7 +31,7 @@ class orderList extends Component {
         loading: false,
         oStatus:'all',  //status状态值
         columns:[
-            {title: '_id',dataIndex: '_id',key:'_id'},
+            // {title: '_id',dataIndex: '_id',key:'_id'},
             {title: '订单号',dataIndex: 'oId',key:'oId'},
             {title: '用户',dataIndex: 'oUser',key:'oUser'},
             {title: '订单状态',dataIndex: 'oStatus',key:'oStatus',render(oStatus){
@@ -96,7 +96,7 @@ class orderList extends Component {
         })
       }
       request.then(data => {
-        if(data.code==403){
+        if(data.code===403){
           this.setState({
             loading: false,  //关闭loading
           })

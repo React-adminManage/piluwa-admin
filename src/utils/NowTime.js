@@ -8,7 +8,6 @@
     let h = time.getHours();
     let mm = time.getMinutes();
     let s = time.getSeconds();
-    let nowDate =''+ y + m +d ; //获取当前的年月日
     let now= y+'-'+timePD(m)+'-'+timePD(d)+' '+timePD(h)+':'+timePD(mm)+':'+timePD(s);
     return now
 }
