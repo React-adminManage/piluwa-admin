@@ -1,9 +1,16 @@
-import React, { Component} from 'react';
+import React, { Component,Fragment} from 'react';
 import {withRouter}  from 'react-router-dom'
 import CustomNav from '../../components/CustomNav'
 import HeaderNav from '../../components/HeaderNav'
+import Limit from '../../components/Limit'
 import { Layout, message,notification,Button } from 'antd';
 import Style from './index.module.less'
+
+import actionCreator from '../../store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
+
 const { Header, Content, Sider } = Layout;
 
 
@@ -19,9 +26,8 @@ const openNotification = () => {
 };
 
 class Admin extends Component {
-  state = {  }
-  
   componentDidMount=()=>{
+    console.log(this)
     try {
       let {token} =JSON.parse(localStorage.getItem('userMsg')) 
       console.log('cunzai')
@@ -36,7 +42,10 @@ class Admin extends Component {
          
   }
   render() { 
+    let {LimitShow} = this.props
+    console.log(LimitShow)
     return ( 
+      <Fragment>
         <Layout className={Style.wrapper}>
           {/* 侧边栏 */}
         <Sider>
@@ -53,9 +62,6 @@ class Admin extends Component {
         <Layout >
         <Header className={Style.header}>
             <HeaderNav></HeaderNav>
-            <Button type="primary" onClick={openNotification}>
-              Open the notification box
-            </Button>
         </Header>
         <Content className={Style.content}> 
           {this.props.children}
@@ -63,8 +69,15 @@ class Admin extends Component {
         {/* <Footer style={ {height:'10%'} }>Ant Design ©2018 Created by Ant UED</Footer> */}
       </Layout>
     </Layout>
+    {/* 根据全局状态值判断权限是否满足 */}
+    {LimitShow?'':<Limit></Limit>}   
+    </Fragment>
      );
   }
 }
  
-export default  withRouter(Admin);
+export default connect(state=>state,(dispath)=>{
+  return bindActionCreators(actionCreator,dispath)
+})(withRouter(Admin));
+
+ 
