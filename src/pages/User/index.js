@@ -4,8 +4,8 @@ import UserApi from '../../api/UserApi'
 import Style from './index.module.less'
 
 const statusobj={
-  '0':{txt:'已审核',color:'cyan'},
-  '1':{txt:'未审核',color:'blue'},
+  '0':{txt:'锁定',color:'cyan'},
+  '1':{txt:'正常',color:'blue'},
 }
 const sex={
   '0':{txt:'女',color:'red'},
@@ -20,12 +20,12 @@ class User extends Component {
         dataIndex: 'nickName',
         id: '3'
       },
-      {
-        title: '_id',
-        dataIndex: '_id',
-        id: '1'
+      // {
+      //   title: '_id',
+      //   dataIndex: '_id',
+      //   id: '1'
 
-      },
+      // },
       {
         title: '手机号',
         dataIndex: 'phone',

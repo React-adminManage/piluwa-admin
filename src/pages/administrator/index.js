@@ -6,12 +6,12 @@ import AdminApi from '../../api/AdminApi'
 const { TreeNode } = TreeSelect;
 
 let statusobj = {
-    '0': { txt: '已审核', color: 'cyan' },
-    '1': { txt: '未审核', color: 'blue' },
+    '0': { txt: '禁用', color: 'cyan' },
+    '1': { txt: '正常', color: 'blue' },
 }
 let ButterMan = {
-    '0': { txt: '良民', color: 'skyblue' },
-    '1': { txt: '汉奸', color: 'orange' }
+    '0': { txt: '普通管理员', color: 'skyblue' },
+    '1': { txt: '超级管理员', color: 'orange' }
 }
 class Admins extends Component {
     state = {
@@ -190,7 +190,7 @@ class Admins extends Component {
                         <TreeNode value="1" title="已审核"></TreeNode>
                         <TreeNode value="0" title="待审核"></TreeNode>
                     </TreeSelect> */}
-                    状　态 :　<input type='text' ref="ss" className={style.inp1} placeholder='请输入状态码'/><br />
+                    状　态 :　<input type='text' ref="ss" className={style.inp1} placeholder='请输入状态码0或1'/><br />
                 </Modal>
             </div>
         );
