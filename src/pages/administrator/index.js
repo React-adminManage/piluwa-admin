@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import style from './index.module.less'
-import { Card, Table, Button, Modal, notification, Spin, Popconfirm, message, Tag, TreeSelect,Input } from 'antd';
+import { Card, Table, Button, Modal, notification, Spin, Popconfirm, message, Tag,Icon } from 'antd';
 import AdminApi from '../../api/AdminApi'
-// let columns =
-const { TreeNode } = TreeSelect;
+
+
+import actionCreator from '@store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
 
 let statusobj = {
-    '0': { txt: '禁用', color: 'cyan' },
-    '1': { txt: '正常', color: 'blue' },
+    '0': { txt: '禁用', color: 'cyan',type:'lock' },
+    '1': { txt: '正常', color: 'blue',type:'unlock' },
 }
 let ButterMan = {
     '0': { txt: '普通管理员', color: 'skyblue' },
@@ -28,7 +32,7 @@ class Admins extends Component {
             // },
             // 每個low加一個id 並且在table 裡面加rowaKey={row=>row._id}  接觸報錯
             {
-                title: '用户名',
+                title: '管理员',
                 dataIndex: 'userName',
                 // key: '用户名',
                 id: '2'
@@ -40,13 +44,13 @@ class Admins extends Component {
             //     id: '3'
             // },
             {
-                title: '状态',
+                title: '账号状态',
                 dataIndex: 'Status',
                 // key: '状态',
                 id: '4',
                 render(oStatus) {
                     return (
-                        <Tag color={statusobj[oStatus].color}>{statusobj[oStatus].txt}</Tag>
+                        <Tag color={statusobj[oStatus].color}><Icon type={statusobj[oStatus].type}  />{statusobj[oStatus].txt}</Tag>
                     )
                 }
             },
@@ -67,18 +71,43 @@ class Admins extends Component {
                 id: '6',
                 render: (record) => {
                     // 自定义渲染的列表
+                    // console.log(record)
                     return (
-                        <div>
-                            <Popconfirm
+                        <div style={{cursor:'pointer'}}>
+                           {record.Status?
+                            <Popconfirm 
+                            title="确认禁用该管理员账号?"
+                            onConfirm={() => {
+                                this.StatusSwitch(record._id,record.Status)
+                            }}
+                            onCancel={() => {
+                                message.error('取消');
+                            }}>
+                               <Icon type="stop"  style={{fontSize:'16px'}}/>禁用
+                           </Popconfirm>:
+                           <Popconfirm 
+                           title="确认启用该管理员账号?"
+                           onConfirm={() => {
+                               this.StatusSwitch(record._id,record.Status)
+                           }}
+                           onCancel={() => {
+                               message.error('取消');
+                           }}>
+                              <Icon type="check"  style={{fontSize:'16px'}}/>启用
+                          </Popconfirm>                        
+                        }
+                            
+                            <Popconfirm 
                                 title="你确定要删除这个用户吗?"
                                 onConfirm={() => {
-                                    this.delAdmin(record._id)
+                                    this.delAdmin(record._id,record.identity)
                                 }}
                                 onCancel={() => {
                                     message.error('取消删除');
                                 }}
                             >
-                                <Button type='danger' size='small'>删除</Button>
+                                {/* <Button type='danger' size='small'>删除</Button> */}
+                                <Icon style={{fontSize:'16px',marginLeft:'10px'}} type="delete" />删除
                             </Popconfirm>
                         </div>
                     )
@@ -98,15 +127,44 @@ class Admins extends Component {
     //     return arr
 
     // }
+
+    // 启用禁用切换
+    StatusSwitch = async(_id,Status) =>{
+        Status = Status%2?'0':'1'
+        let obj = {
+            _id,Status
+        }
+        let result = await AdminApi.changeStatus(obj)
+        if(result.code===403){ //权限不足
+            this.props['CHANGE_LimitShow']();
+            return 
+          }
+        if(!result.code){ //成功
+            // 修改完后更新页面
+            message.success('账号状态修改成功')
+            this.refreshList()
+        }
+    }
+
     //  删除管理员数据
-    delAdmin = async (_id) => {
+    delAdmin = async (_id,identity) => {
         // 获取到id 之后 调用接口删除id
         // console.log('删除',_id);
-        let result = await AdminApi.del(_id)
-        // 根据结果进行
-        if (result.code !== 0) { return false }
-        // 删除完后更新页面
-        this.refreshList()
+        if(!identity){
+            let result = await AdminApi.del(_id)
+            // 根据结果进行
+            if(result.code===403){ //权限不足
+                this.props['CHANGE_LimitShow']();
+                return 
+              }
+            if (result.code !== 0) { return false }
+            // 删除完后更新页面
+            message.success('管理员删除成功')
+            this.refreshList()
+        }else{
+            message.error('错误:超级管理无法删除')
+        }
+       
 
     }
     //  代表成功的回调
@@ -119,6 +177,10 @@ class Admins extends Component {
         console.log('点击handleOk ok');
         
         let result = await AdminApi.add({ userName, passWord, Status })
+        if(result.code===403){ //权限不足
+            this.props['CHANGE_LimitShow']();
+            return 
+          }
         if (result.code !== 0) {
             return notification.error({
                 description: '添加失敗，請詳細的检查参数', message: '错误', duration: 1.5
@@ -142,7 +204,10 @@ class Admins extends Component {
         // 重新再进行一步网络请求数据
         let result = await AdminApi.list()
         // console.log(result);
-
+        if(result.code===403){ //权限不足
+            this.props['CHANGE_LimitShow']();
+            return 
+        }
         this.setState({ dataSource: result.adminList, spinning: false })
     }
     //  代表失败的回调
@@ -170,11 +235,11 @@ class Admins extends Component {
                     {/* dataSource 表格内容数据
                         columns  表头数据
                         rowkey  设置为唯一索引字段 */}
-                    <Button type="primary" shape="round" icon="download" size={size} onClick={() => {
+                    <Button type="primary" shape="round" icon="plus" size={size} onClick={() => {
                         this.setState({ visible: true })
                     }}>添加</Button>
                     <Spin spinning={spinning}>
-                        <Table dataSource={dataSource} columns={columns} rowKey={row => row._id}></Table>
+                        <Table style={{marginTop:'10px'}} dataSource={dataSource} columns={columns} rowKey={row => row._id}></Table>
                     </Spin>
                 </Card>
                 {/* 添加的模态框 */}
@@ -196,8 +261,10 @@ class Admins extends Component {
         );
     }
 }
-export default Admins;
 
+export default connect(state=>state,(dispath)=>{
+  return bindActionCreators(actionCreator,dispath)
+})(Admins);
 
 
 

@@ -96,7 +96,7 @@ class orderList extends Component {
         })
       }
       request.then(data => {
-        if(data.code===403){
+        if(data.code===403){          
           this.setState({
             loading: false,  //关闭loading
           })

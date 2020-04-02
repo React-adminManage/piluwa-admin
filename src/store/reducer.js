@@ -18,7 +18,8 @@ export  default (prevState = state,action)=>{
             }else{
                 newData.LimitShow=!newData.LimitShow;  //批奏折
             }
-            
+            break;
+        default:
             break;
     }
     return newData; //批完返回

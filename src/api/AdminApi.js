@@ -19,7 +19,10 @@ class Admin {
         // 拼接法
         // return Axios.post(url+'/'+_id)
         return Axios.post(url,{_id})
-
+    }
+    changeStatus(obj){
+        let url='http://47.97.244.129:3002/admin/changeStatus'
+        return Axios.post(url,obj)
     }
 }
 export default new Admin()

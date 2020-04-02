@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classifyAPI from '@api/classifyAPI'
-import { Card, message, Table, Button, Popconfirm, Modal, notification, Spin } from 'antd'
+import { Card, message, Table, Button, Popconfirm, Modal, notification, Spin,Icon } from 'antd'
 import style from './index.module.less'
 
 // 引入redux相关
@@ -25,9 +25,11 @@ class ClassifyList extends Component {
                             <Popconfirm title='你确定要删除这个分类么？'
                                 onConfirm={() => { this.delType(recode._id) }}
                             >
-                                <Button type='danger' size='small' style={{ marginRight: '20px' }}>删除</Button>
+                                {/* <Button type='danger' size='small' style={{ marginRight: '20px' }}>删除</Button> */}
+                                <Icon style={{fontSize:'18px'}} type="delete" />
                             </Popconfirm>
-                            <Button size='small' onClick={() => { this.showConfirm(recode._id) }} >修改</Button>
+                            <Icon style={{marginLeft:'10px',fontSize:'18px'}} type="edit" onClick={() => { this.showConfirm(recode._id) }} />
+                            {/* <Button size='small' onClick={() => { this.showConfirm(recode._id) }} >修改</Button> */}
                         </div>
                     )
                 }
@@ -101,7 +103,7 @@ class ClassifyList extends Component {
     refreshList = async () => {
         this.setState({ spinning: true })
         classifyAPI.list().then((pramas) => {
-           if(pramas.code==403){ //权限不足
+           if(pramas.code===403){ //权限不足
                 this.props['CHANGE_LimitShow']();
            }
             this.setState({ list: pramas.typeList, spinning: false })
@@ -113,7 +115,7 @@ class ClassifyList extends Component {
         let Type = this.refs.type.value
         let result = await classifyAPI.add({ Type })
         console.log(result)
-        if(result.code==403){ //权限不足
+        if(result.code===403){ //权限不足
             this.props['CHANGE_LimitShow']();
             this.setState({ visible: false })
             return
