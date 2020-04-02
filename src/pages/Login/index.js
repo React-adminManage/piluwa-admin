@@ -10,13 +10,13 @@ class Login extends Component {
     let {validateFields} = this.props.form //用户获取表单数据的值
     // 校验输入的值
     validateFields((err,data)=>{
-      console.log(err,data)
+      // console.log(err,data)
       if(err){
         // 输入错误
         message.error('输入有误请重试')
       }else{
         api.login(data).then((res)=>{
-          console.log(res)
+          // console.log(res)
           if(res.code === 404){
             message.error('用户名密码错误')
           }else{
