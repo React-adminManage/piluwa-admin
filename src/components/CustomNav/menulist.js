@@ -6,6 +6,18 @@ export default[
     path:'/admin/home'
   },
   {
+    key:'7',
+    title:"用户管理",
+    icon:'user',
+    path:'/admin/user'
+  },
+  {
+    key:'8',
+    title:"管理员管理",
+    icon:'team',
+    path:'/admin/administrator'
+  },
+  {
     key:'1',
     title:"类别管理",
     icon:'appstore',
@@ -30,6 +42,28 @@ export default[
       icon:'form',
     }
    ]
+  },
+
+  {
+    key:'5',
+    title:"订单管理",
+    icon:'file-search',
+    path:'/admin/order',
+    children:[
+      {
+        key:'5-1',
+        title:'订单列表',
+        path:'/admin/order/List',
+        icon:'ordered-list',
+        
+      },
+      {
+        key:'5-2',
+        title:'订单审核',
+        path:'/admin/order/Audit',
+        icon:'edit',
+      },
+    ]
   },
   {
     key:'4',
@@ -56,39 +90,6 @@ export default[
         icon:'bar-chart',
       },
     ]
-  },
-  {
-    key:'5',
-    title:"订单管理",
-    icon:'file-search',
-    path:'/admin/order',
-    children:[
-      {
-        key:'5-1',
-        title:'订单列表',
-        path:'/admin/order/List',
-        icon:'ordered-list',
-        
-      },
-      {
-        key:'5-2',
-        title:'订单审核',
-        path:'/admin/order/Audit',
-        icon:'edit',
-      },
-    ]
-  },
-  {
-    key:'7',
-    title:"用户管理",
-    icon:'user',
-    path:'/admin/user'
-  },
-  {
-    key:'8',
-    title:"管理员管理",
-    icon:'team',
-    path:'/admin/administrator'
   },
   {
     key:'9',

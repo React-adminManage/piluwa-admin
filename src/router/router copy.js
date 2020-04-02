@@ -4,27 +4,43 @@ import loadable from '../utils/loadable'
 
 // 下面引入组件
 
-// import Login from '@pages/Login'  //引入登录组件
-// import Admin from '@pages/Admin'  //引入管理组件
+import Login from '@pages/Login'  //引入登录组件
+import Admin from '@pages/Admin'  //引入管理组件
 
 
 
+// 主页面组件
+import Home from '@pages/Home/home'
 
+// 商品管理相关组件
+import ShopList from '@pages/Shop/ShopList'
+import ShopAdd from '@pages/Shop/ShopAdd'
+import ShopUpdate from '@pages/Shop/ShopUpdate'
+
+// 用户管理
+import User from '@pages/User/index'
+// 管理路由
+import admins from '@pages/administrator/index'
+// 订单管理相关组件
+import orderList from '@pages/order/orderList'
+import orderAudit from '@pages/order/orderAudit'
+// import connectRoute from './utils/connectRoute'
+
+// 404页面
+import Error from '@pages/Error/error'
+
+// 商品分类相关组件
+import Classify from '@pages/Classify/index'
+
+// 系统日志
+import Log from '@pages/Log/index'
 const Login = loadable(()=>import('@pages/Login'))
-const Admin = loadable(()=>import('@pages/Admin'))
-const Home = loadable(()=>import('@pages/Home/home'))
-const ShopList = loadable(()=>import('@pages/Shop/ShopList'))
-const ShopAdd = loadable(()=>import('@pages/Shop/ShopAdd'))
-const ShopUpdate = loadable(()=>import('@pages/Shop/ShopUpdate'))
-const User = loadable(()=>import('@pages/User'))
-const admins = loadable(()=>import('@pages/administrator/index'))
-const orderList = loadable(()=>import('@pages/order/orderList'))
-const orderAudit = loadable(()=>import('@pages/order/orderAudit'))
-const Error = loadable(()=>import('@pages/Error/error'))
-const Classify = loadable(()=>import('@pages/Classify'))
-const Log = loadable(()=>import('@pages/Log'))
+// const Login = ()=>{import('@pages/Login')}
+class Routers extends Component {
 
-    const Routers = () => (
+    render() {
+
+      return (
         // 设置路由 
         <HashRouter>
           <Switch>
@@ -71,7 +87,8 @@ const Log = loadable(()=>import('@pages/Log'))
         </HashRouter>
       )
 
-  
+  }
+}
   
   
   

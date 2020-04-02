@@ -1,7 +1,7 @@
 import React, { Component,Fragment } from 'react';
 import {withRouter} from 'react-router-dom';
 import { Menu, Dropdown, Icon,message,Spin  } from 'antd';
-
+import style from './index.module.less'
 
 let userdata =[
   {name:'个人中心',icon:'user',divider:false},
@@ -55,18 +55,24 @@ class HeaderNav extends Component {
     }
   render() { 
     return ( 
-      <div >
-        <Dropdown overlay={this.createMenu(userdata)}>
+      <div className={style.header}>
+        <article>皮噜娃商城后台管理系统</article>
+        <Dropdown  overlay={this.createMenu(userdata)} className={style.dropdown}>
           <span  className="ant-dropdown-link" onClick={(e)=>{
             console.log(e)
              return e.preventDefault()
           }}>
-            Hover me <Icon type="down" />
+              <img src='ava.png' alt='' style={{width:'20px'}}></img>
+              <span style={{marginLeft:'5px'}}>admin</span>
+           
+            {/* admin <Icon type="down" /> */}
           </span>
         </Dropdown>
-        <Dropdown overlay={this.createMenu(langData)}>
+        <Dropdown overlay={this.createMenu(langData)} className={style.dropdown}>
           <span className="ant-dropdown-link" onClick={e =>  e.preventDefault()}>
-            语言 <Icon type="down" />
+            
+          <Icon style={{fontSize :'20px'}} type="codepen-circle" />
+          <span style={{marginLeft:'5px'}}>语言切换</span>
           </span>
         </Dropdown>
       </div>
