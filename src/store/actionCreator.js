@@ -18,11 +18,13 @@ export default{
             let action ={ 
                     type:CHANGE_NAME,
                     payload:'半藏'
-                    }   
+                  }   
             dispatch(action)
             },1000)
         }
-    },
+  },
+
+
   [CHANGE_AGE](){
     return{
       type:CHANGE_AGE,

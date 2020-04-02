@@ -5,6 +5,8 @@ import order from '@api/orderAPI'
 import Style from './index.module.less'
 import OrderDetail from '../orderDetail/index'
 
+
+// 引入redux相关
 import actionCreator from '../../../store/actionCreator'
 import {bindActionCreators } from 'redux'
 import {connect} from 'react-redux'
@@ -101,7 +103,6 @@ class orderList extends Component {
           console.log(this);
           this.props['CHANGE_LimitShow']();
           return 
-          
         }
         const pagination = { ...this.state.pagination };
         pagination.total = data.allcount; //总记录数 
@@ -201,6 +202,9 @@ class orderList extends Component {
     }
 }
  
+
+
+// export default orderList
 
 export default connect(state=>state,(dispath)=>{
   return bindActionCreators(actionCreator,dispath)
