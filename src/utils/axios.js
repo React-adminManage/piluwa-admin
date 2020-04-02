@@ -5,7 +5,12 @@ import axios from 'axios'  //引入axios
 
 axios.interceptors.request.use(function (config) {
   // 调用接口的时候把token加入到请求头
-  let token =JSON.parse(localStorage.getItem('userMsg')).token||'no token'       
+  let token=''
+  try {
+     token =JSON.parse(localStorage.getItem('userMsg')).token  
+  } catch (error) {
+    token = 'no token'
+  }
   config.headers.authorization = 'Bearer '+ token 
   return config;
 }, function (error) {
