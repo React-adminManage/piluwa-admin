@@ -1,4 +1,5 @@
 import React, { Component,Fragment } from 'react';
+import {withRouter} from 'react-router-dom';
 import { Menu, Dropdown, Icon,message,Spin  } from 'antd';
 
 
@@ -13,37 +14,49 @@ let langData =[
   {name:'英语',icon:'logout',divider:false},
 ]
 
-const onClick = ({ key }) => {
-  // if(key==2&&confirm("确定要退出吗")){
-  //     message.info(`退出登录,3s后进行页面跳转`);
-    // }
-  }
+
  
 
-function createMenu(data){
- return (
-    <Fragment>
-    <Menu onClick={onClick}>
-      {data.map((item,index)=>{
-        return(   
-            <Menu.Item key={index}>
-              <span rel="noopener noreferrer">
-              <Icon type={item.icon} />{item.name}
-              </span>
-              {/* <Menu.Divider></Menu.Divider> */}
-            </Menu.Item>
-        )
-      })}
-    </Menu>
-   </Fragment>
- )
-}
+
 class HeaderNav extends Component {
   state = {  }
+
+  createMenu(data){
+    return (
+       <Fragment>
+       <Menu onClick={this.onClick}>
+         {data.map((item,index)=>{
+           return(   
+               <Menu.Item key={index}>
+                 <span rel="noopener noreferrer">
+                 <Icon type={item.icon} />{item.name}
+                 </span>
+                 {/* <Menu.Divider></Menu.Divider> */}
+               </Menu.Item>
+           )
+         })}
+       </Menu>
+      </Fragment>
+    )
+   }
+  onClick = ({ key }) => {
+    if(key==2){
+        console.log('退出登录')
+        message.info(`退出登录,3s后进行页面跳转`);
+        setTimeout(() => {
+          // 清除本地local
+          let userMsg = JSON.parse(localStorage.getItem('userMsg'))
+          userMsg.token='';//清除token
+          localStorage.setItem('userMsg',JSON.stringify(userMsg)); //更新local
+          this.props.history.replace('/login')
+        }, 3000);
+        
+      }
+    }
   render() { 
     return ( 
       <div >
-        <Dropdown overlay={createMenu(userdata)}>
+        <Dropdown overlay={this.createMenu(userdata)}>
           <span  className="ant-dropdown-link" onClick={(e)=>{
             console.log(e)
              return e.preventDefault()
@@ -51,7 +64,7 @@ class HeaderNav extends Component {
             Hover me <Icon type="down" />
           </span>
         </Dropdown>
-        <Dropdown overlay={createMenu(langData)}>
+        <Dropdown overlay={this.createMenu(langData)}>
           <span className="ant-dropdown-link" onClick={e =>  e.preventDefault()}>
             语言 <Icon type="down" />
           </span>
@@ -61,4 +74,4 @@ class HeaderNav extends Component {
   }
 }
  
-export default HeaderNav;
+export default withRouter(HeaderNav);

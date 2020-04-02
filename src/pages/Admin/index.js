@@ -2,9 +2,22 @@ import React, { Component} from 'react';
 import {withRouter}  from 'react-router-dom'
 import CustomNav from '../../components/CustomNav'
 import HeaderNav from '../../components/HeaderNav'
-import { Layout, message } from 'antd';
+import { Layout, message,notification,Button } from 'antd';
 import Style from './index.module.less'
 const { Header, Content, Sider } = Layout;
+
+
+const openNotification = () => {
+  notification.open({
+    message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
+
 class Admin extends Component {
   state = {  }
   
@@ -40,6 +53,9 @@ class Admin extends Component {
         <Layout >
         <Header className={Style.header}>
             <HeaderNav></HeaderNav>
+            <Button type="primary" onClick={openNotification}>
+              Open the notification box
+            </Button>
         </Header>
         <Content className={Style.content}> 
           {this.props.children}
