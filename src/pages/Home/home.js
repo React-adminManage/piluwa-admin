@@ -1,8 +1,37 @@
 import React,{Component,Fragment} from 'react'
 import Style from './index.module.less'
 import {Card} from 'antd'
+import ReactEcharts from 'echarts-for-react';
 class Home extends Component {
     state = {  }
+    line(){
+        return{
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+            {
+                data: [82, 100, 150, 34, 190, 10, 120],
+                type: 'line',
+                areaStyle: {}
+            }
+        ]
+        }
+      }
     render() { 
         return ( 
             <Fragment>
@@ -28,7 +57,9 @@ class Home extends Component {
                 <div className={Style.sale}>
                     
                     <Card title="销售量" className={Style.card}>
-                        
+                            <div>
+                                <ReactEcharts option={this.line()}></ReactEcharts>
+                            </div>
                     </Card>
                   
                 </div>

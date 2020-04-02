@@ -24,6 +24,12 @@ const Error = loadable(()=>import('@pages/Error/error'))
 const Classify = loadable(()=>import('@pages/Classify'))
 const Log = loadable(()=>import('@pages/Log'))
 
+const Bar = loadable(()=>import('@pages/Echarts/Bar'))
+const Line = loadable(()=>import('@pages/Echarts/Line'))
+const Pie = loadable(()=>import('@pages/Echarts/Pie'))
+
+
+
     const Routers = () => (
         // 设置路由 
         <HashRouter>
@@ -58,7 +64,11 @@ const Log = loadable(()=>import('@pages/Log'))
                     {/* 商品分类的路由 */}
                     <Route exact path='/admin/type/find'   component={Classify}></Route>
                     
+                    {/* 图表路由 */}
 
+                    <Route exact path='/admin/echarts/pie'   component={Pie}></Route>
+                    <Route exact path='/admin/echarts/bar'   component={Bar}></Route>
+                    <Route exact path='/admin/echarts/line'   component={Line}></Route>
                     {/* 系统日志 */}
                     <Route exact path='/admin/log'   component={Log}></Route>
                     <Route component={Error}></Route>
