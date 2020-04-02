@@ -1,6 +1,6 @@
 import React, { Component,Fragment } from 'react';
 import {withRouter} from 'react-router-dom';
-import { Menu, Dropdown, Icon,message,Spin  } from 'antd';
+import { Menu, Dropdown, Icon,message  } from 'antd';
 import style from './index.module.less'
 
 let userdata =[
@@ -41,7 +41,7 @@ class HeaderNav extends Component {
    }
   onClick = ({ key }) => {
     console.log(key)
-    if(key=='退出登录'){
+    if(key==='退出登录'){
         message.info(`退出登录,3s后进行页面跳转`);
         setTimeout(() => {
           // 清除本地local

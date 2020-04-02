@@ -18,7 +18,7 @@ class Error extends Component {
         
         return ( 
             <div className={Style.error}>
-                <img src="404.png"></img>
+                <img src="404.png" alt=''></img>
                 <Button onClick={()=>{
                     this.props.history.replace('/admin/home')
                 }}>back Home</Button>

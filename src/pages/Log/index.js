@@ -1,23 +1,14 @@
 import React,{Component} from 'react'
 
-import { Card,Button,Input,Tabs,Tag,Table,message} from 'antd';
+import { Card,Table} from 'antd';
 import log from '@api/logApI'
 import Style from './index.module.less'
-
-
-// import actionCreator from '../../../store/actionCreator'
-// import {bindActionCreators } from 'redux'
-// import {connect} from 'react-redux'
-
-const { TabPane } = Tabs;
-
-
 
 class Log extends Component {
     state = {
       data:[],
       loading: false,
-      pagination: {defaultPageSize:5},
+      pagination: {defaultPageSize:8},
       columns :[
         {
           title: '访问目标',
@@ -44,7 +35,7 @@ class Log extends Component {
     }
   
     fetch = (params = {}) => {  //网络请求订单列表
-      let {results=5,page=1} = params;   //页面大小，页面
+      let {results=8,page=1} = params;   //页面大小，页面
       this.setState({ loading: true });  
        
       log.getLog({pageSize:results,page}).then(data => {
@@ -70,7 +61,7 @@ class Log extends Component {
         pagination: pager,
       });
       this.fetch({
-        results: 5,
+        results: 8,
         page: pagination.current,
       });
     };
@@ -99,7 +90,5 @@ class Log extends Component {
 }
  
 
-// export default connect(state=>state,(dispath)=>{
-//   return bindActionCreators(actionCreator,dispath)
-// })(orderList);
+
 export default Log

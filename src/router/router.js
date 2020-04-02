@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { HashRouter, Route,Redirect,Switch  } from 'react-router-dom'  //引入路由
 import loadable from '../utils/loadable'
 
@@ -23,6 +23,12 @@ const orderAudit = loadable(()=>import('@pages/order/orderAudit'))
 const Error = loadable(()=>import('@pages/Error/error'))
 const Classify = loadable(()=>import('@pages/Classify'))
 const Log = loadable(()=>import('@pages/Log'))
+
+const Bar = loadable(()=>import('@pages/Echarts/Bar'))
+const Line = loadable(()=>import('@pages/Echarts/Line'))
+const Pie = loadable(()=>import('@pages/Echarts/Pie'))
+
+
 
     const Routers = () => (
         // 设置路由 
@@ -58,7 +64,11 @@ const Log = loadable(()=>import('@pages/Log'))
                     {/* 商品分类的路由 */}
                     <Route exact path='/admin/type/find'   component={Classify}></Route>
                     
+                    {/* 图表路由 */}
 
+                    <Route exact path='/admin/echarts/pie'   component={Pie}></Route>
+                    <Route exact path='/admin/echarts/bar'   component={Bar}></Route>
+                    <Route exact path='/admin/echarts/line'   component={Line}></Route>
                     {/* 系统日志 */}
                     <Route exact path='/admin/log'   component={Log}></Route>
                     <Route component={Error}></Route>

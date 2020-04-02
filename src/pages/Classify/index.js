@@ -3,6 +3,11 @@ import classifyAPI from '@api/classifyAPI'
 import { Card, message, Table, Button, Popconfirm, Modal, notification, Spin } from 'antd'
 import style from './index.module.less'
 
+// 引入redux相关
+import actionCreator from '@store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
 class ClassifyList extends Component {
     state = {
         visible: false,//模态框可视状态，默认隐藏
@@ -62,6 +67,10 @@ class ClassifyList extends Component {
     //修改商品种类
     EditType = async (_id) => {
         let { code, msg } = await classifyAPI.modify(_id, this.state.typeName)
+        if(code ===403) {
+            console.log(this)
+        }
+        console.log(this)
         if (code) { return message.error(msg) }
         this.refreshList()
     }
@@ -80,6 +89,10 @@ class ClassifyList extends Component {
     //删除商品分类
     delType = async (_id) => {
         let { code, msg } = await classifyAPI.del(_id)
+        if(code ===403){
+            this.props['CHANGE_LimitShow']();
+            return
+        }
         if (code) { return message.error(msg) }
         this.refreshList()
     }
@@ -88,6 +101,9 @@ class ClassifyList extends Component {
     refreshList = async () => {
         this.setState({ spinning: true })
         classifyAPI.list().then((pramas) => {
+           if(pramas.code==403){ //权限不足
+                this.props['CHANGE_LimitShow']();
+           }
             this.setState({ list: pramas.typeList, spinning: false })
         })
     }
@@ -97,6 +113,11 @@ class ClassifyList extends Component {
         let Type = this.refs.type.value
         let result = await classifyAPI.add({ Type })
         console.log(result)
+        if(result.code==403){ //权限不足
+            this.props['CHANGE_LimitShow']();
+            this.setState({ visible: false })
+            return
+        }
         if (result.code !== 0) {
             return notification.error(
                 { description: '商品分类添加失败，请详细检查传输', message: '错误', duration: 1.5 })
@@ -138,5 +159,9 @@ class ClassifyList extends Component {
         );
     }
 }
-export default ClassifyList;
+// export default ClassifyList;
 
+
+export default connect(state=>state,(dispath)=>{
+    return bindActionCreators(actionCreator,dispath)
+  })(ClassifyList);

@@ -1,16 +1,17 @@
-import React,{Component,Fragment} from 'react'
+import React,{Component} from 'react'
 import order from '@api/orderAPI';
 import OrderDetail from '@pages/order/orderDetail'
 import NowTime from '@utils/NowTime'
 import { Card, List, Modal, Skeleton,Button,Input,message } from 'antd';
 
+// 引入redux相关
+import actionCreator from '../../../store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
 
 import Style from './index.module.less'
 const { TextArea } = Input;
 
-
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
 class orderAudit extends Component {
     state = {
        showData:{},
@@ -79,6 +80,10 @@ class orderAudit extends Component {
 
     submitaudio=(obj)=>{
         order.audioOrder(obj).then((res)=>{  //审核完成 再次渲染页面
+            if(res.code===403){ //权限不足
+                this.props['CHANGE_LimitShow']();
+                return 
+            }
             this.getData(data => {
                 this.setState({
                   initLoading: false,  //加载状态显示
@@ -118,7 +123,7 @@ class orderAudit extends Component {
         this.submitaudio(obj);
     }
     render() { 
-        const { initLoading, loading, list } = this.state;
+        const { initLoading,  list } = this.state;
         
         return ( 
             
@@ -135,9 +140,9 @@ class orderAudit extends Component {
                             dataSource={list}    //数据源
                             renderItem={item => (
                                 <List.Item 
-                                    actions={[<a key="list-loadmore-edit" onClick={this.audio.bind(this,item)}>审核</a>, <a key="list-loadmore-more" onClick={()=>{
+                                    actions={[<span key="list-loadmore-edit" onClick={this.audio.bind(this,item)}>审核</span>, <span key="list-loadmore-more" onClick={()=>{
                                         this.jumpDetail(item)
-                                    }}>详情</a>]}
+                                    }}>详情</span>]}
                                 >
                                     <Skeleton avatar title={false} loading={item.loading} active>
                                     <List.Item.Meta
@@ -153,12 +158,12 @@ class orderAudit extends Component {
                    
                     </div>
                     <div className={Style.audio}>
-                       <label><span>申请人：</span>{this.state.showData.oUser}</label> 
-                       <label><span>订单号：</span>{this.state.showData.oId}</label>
+                       <label><span>申请人：</span>{this.state.showData.oUser||''}</label> 
+                       <label><span>订单号：</span>{this.state.showData.oId||''}</label>
                        
                        <label><span>申请理由：</span>{this.state.showData.auditMsg?this.state.showData.auditMsg:'无'}</label>
-                       <label><span>图片：</span>{this.state.showData.auditImg?<img style={{width:'100px'}} src={this.state.showData.auditImg}/>:'无'}</label>
-                       <label><span>申请时间：</span>{this.state.showData.createTime}</label>
+                       <label><span>图片：</span>{this.state.showData.auditImg?<img alt='' style={{width:'100px'}} src={this.state.showData.auditImg}/>:'无'}</label>
+                       <label><span>申请时间：</span>{this.state.showData.createTime||''}</label>
                        <TextArea ref='audiores' rows={4} defaultValue='请输入审核结果' autoSize={{minRows:4, maxRows:4}}/>
                        <section className={Style.btn}>
                         <Button className={Style.bt} type='primary' onClick={this.pass}>通过</Button>
@@ -184,4 +189,7 @@ class orderAudit extends Component {
     }
 }
  
-export default orderAudit;
+
+export default connect(state=>state,(dispath)=>{
+    return bindActionCreators(actionCreator,dispath)
+  })(orderAudit);
