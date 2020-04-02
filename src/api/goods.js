@@ -37,6 +37,12 @@ class Goods{
     let  url=`${HOST}/shop/getById`
     return axios.post(url,{_id:id})
    }
+   //图片上传
+   picUpdate(payload){
+    let url=`${HOST}/upload`
+    return axios.post(url,payload)
+   }
+
 }
 
 export default new Goods()

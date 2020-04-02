@@ -2,6 +2,12 @@ import React,{Component, Fragment} from 'react'
 import style from './index.module.less'
 import {Card, message,Table,Tag, Button,Pagination,Popconfirm,Spin } from 'antd'
 import goodsApi from '../../../api/goods'
+
+import actionCreator from '../../../store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
+
 class ShopList extends Component {
      
         state = { 
@@ -29,7 +35,7 @@ class ShopList extends Component {
             }}, 
             {title: '产品图',dataIndex: 'imgUrl',key: 'imgUrl',width:160,render(imgUrl){
                 return (
-                    <img style={{width:100,height:100}} src={imgUrl}/>
+                    <img style={{width:100,height:100}} src={imgUrl} alt=''/>
                 )
             }}, 
             {title: '描述',dataIndex: 'describe',key: 'describe', width:460}, 
@@ -76,13 +82,19 @@ class ShopList extends Component {
          this.getListData()
      }
      //删除商品数据
-     delGoods= async (_id)=>{
-         let result = await goodsApi.del(_id)
+     delGoods=  (_id)=>{
+         let result =  goodsApi.del(_id)
+         result.then(data=>{
+            if(data.code===403){
+                this.props['CHANGE_LimitShow']();
+                return  
+              }
+        })
          this.getListData() 
      }
      //上架商品
      putawayGoods= async (_id,putaway)=>{
-        let result = await goodsApi.putaway(_id,putaway)
+        await goodsApi.putaway(_id,putaway)
         if(putaway===1){
             putaway=0
         }else{
@@ -128,8 +140,8 @@ class ShopList extends Component {
 
                             </Table>
                             <Pagination showQuickJumper defaultCurrent={1} total={allcount } pageSize={pageSize}  
-                            onChange={(page,pageSize)=>{
-                                console.log(page)
+                            onChange={(page)=>{
+ 
                                 this.setState({page},()=>{
                                     this.getListData()
                                 })  
@@ -142,4 +154,9 @@ class ShopList extends Component {
     }
 }
  
-export default ShopList;
+ 
+export default connect(state=>state,(dispath)=>{
+    return bindActionCreators(actionCreator,dispath)
+  })(ShopList);
+
+ 

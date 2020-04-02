@@ -2,6 +2,12 @@ import React,{Component}from 'react'
 import {Card,Input, Button,TreeSelect } from 'antd'
 import style from './index.module.less'
 import goodsApi from '../../../api/goods'
+
+
+import actionCreator from '../../../store/actionCreator'
+import {bindActionCreators } from 'redux'
+import {connect} from 'react-redux'
+
 const { TextArea } = Input;
 const { TreeNode } = TreeSelect;
 
@@ -9,32 +15,43 @@ const { TreeNode } = TreeSelect;
 
 class ShopUpdate extends Component {
     state= {
-        
             data:{ }
     }
 
-   
-   
-   
     async componentDidMount(){
         //获取ID
         let {id}=this.props.match.params
         //获取要修改的信息
         id = id.slice(3)
         let result = await goodsApi.findOne(id)
+        console.log(result)
+        if (result.code===403){
+            this.props['CHANGE_LimitShow']();
+            return
+        }
+        // result.then(data=>{
+        //     if(data.code==403){
+                 
+        //         this.props['CHANGE_LimitShow']();
+        //         return 
+                
+        //       }
+        // })
         this.setState({data:result.result})
        
     }
      
      async update(data){
-        let result = await goodsApi.updateGoods(data).then(
+        await goodsApi.updateGoods(data).then(
             this.props.history.replace('/admin/shop/shopList')
         )
         console.log('传输成功')
       }
+      
+
         
     render() { 
-        let {_id,data} = this.state
+        let {data} = this.state
         return ( 
             <div className={style.box}>
 
@@ -89,7 +106,7 @@ class ShopUpdate extends Component {
                      
                 }}
                 /><br />
-                 
+                
                 商品描述<TextArea placeholder="请写入商品的描述" value={this.state.data.describe} allowClear onChange={(e)=>{
                     data.describe=e.target.value
                     this.setState({data})
@@ -107,8 +124,11 @@ class ShopUpdate extends Component {
     }
 }
  
-export default ShopUpdate;
-/* 
+export default connect(state=>state,(dispath)=>{
+    return bindActionCreators(actionCreator,dispath)
+  })(ShopUpdate);
+
+ /* 
 商品修改
 1.根据商品的ID获取商品相关的信息
 2.显示默认信息
